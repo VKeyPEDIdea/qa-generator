@@ -1,1 +1,6 @@
 @import './styles/index.scss';
+
+body {
+    background: $color-body;
+    color: $color-on-body;
+}
