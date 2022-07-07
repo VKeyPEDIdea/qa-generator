@@ -10,6 +10,7 @@ export interface IQuestionListStore {
     questionList: IQuestionListItem[];
     setQuestionTitleById(id: string, title: string): void;
     setAnswerListById(id: string, answerList: string[]): void;
+    addQuestion(): void;
 }
 
 const initialQuestionList: IQuestionListItem[] = [
@@ -27,6 +28,7 @@ class QuestionListStore implements IQuestionListStore {
         this.questionList = initialQuestionList;
         this.setQuestionTitleById = this.setQuestionTitleById.bind(this);
         this.setAnswerListById = this.setAnswerListById.bind(this);
+        this.addQuestion = this.addQuestion.bind(this);
         makeAutoObservable(this);
     }
 
@@ -50,6 +52,15 @@ class QuestionListStore implements IQuestionListStore {
             };
             this.questionList = this.questionList.map(item => item.id === id ? newQuestion : item);
         }
+    }
+
+    addQuestion() {
+        const newQuestion: IQuestionListItem = {
+            id: String(this.questionList.length + 1),
+            title: '',
+            answerList: [],
+        };
+        this.questionList = [ ...this.questionList, newQuestion];
     }
 }
 

@@ -11,6 +11,7 @@ const App = observer(({
             questionList,
             setQuestionTitleById,
             setAnswerListById,
+            addQuestion,
         }
     }
 }: AppProps) => {
@@ -20,6 +21,7 @@ const App = observer(({
                 list={questionList}
                 onQuestionTitleChange={setQuestionTitleById}
                 onQuestionAnswerListChange={setAnswerListById}
+                onQuestionAdd={addQuestion}
             />
         </div>
     );
