@@ -1,12 +1,28 @@
-import Question from 'entities/Question';
+import { AppStore } from 'features/store';
+import { observer } from 'mobx-react-lite';
+import GeneratorPage from 'pages/GeneratorPage';
 import './index.scss';
 
-function App() {
+interface AppProps extends AppStore {};
+
+const App = observer(({
+    store: {
+        questions: {
+            questionList,
+            setQuestionTitleById,
+            setAnswerListById,
+        }
+    }
+}: AppProps) => {
     return (
         <div className="App">
-            <Question />
+            <GeneratorPage
+                list={questionList}
+                onQuestionTitleChange={setQuestionTitleById}
+                onQuestionAnswerListChange={setAnswerListById}
+            />
         </div>
     );
-}
+});
 
 export default App;

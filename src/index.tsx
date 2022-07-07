@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from 'app/index';
 import reportWebVitals from './reportWebVitals';
+import store from 'features/store';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -10,7 +11,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <React.StrictMode>
-        <App />
+        <App store={store} />
     </React.StrictMode>
 );
 
