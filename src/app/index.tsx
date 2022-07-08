@@ -12,6 +12,7 @@ const App = observer(({
             setQuestionTitleById,
             setAnswerListById,
             addQuestion,
+            generateAnswersForTable,
         }
     }
 }: AppProps) => {
@@ -22,6 +23,7 @@ const App = observer(({
                 onQuestionTitleChange={setQuestionTitleById}
                 onQuestionAnswerListChange={setAnswerListById}
                 onQuestionAdd={addQuestion}
+                generateTable={generateAnswersForTable}
             />
         </div>
     );

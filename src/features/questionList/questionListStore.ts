@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+import getRandomInt from 'shared/utils/getRandomNumber';
 
 export interface IQuestionListItem {
     id: string;
@@ -11,6 +12,7 @@ export interface IQuestionListStore {
     setQuestionTitleById(id: string, title: string): void;
     setAnswerListById(id: string, answerList: string[]): void;
     addQuestion(): void;
+    generateAnswersForTable(responseAmount: number): Array<string[]>
 }
 
 const initialQuestionList: IQuestionListItem[] = [
@@ -29,6 +31,7 @@ class QuestionListStore implements IQuestionListStore {
         this.setQuestionTitleById = this.setQuestionTitleById.bind(this);
         this.setAnswerListById = this.setAnswerListById.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
+        this.generateAnswersForTable = this.generateAnswersForTable.bind(this);
         makeAutoObservable(this);
     }
 
@@ -61,6 +64,18 @@ class QuestionListStore implements IQuestionListStore {
             answerList: [],
         };
         this.questionList = [ ...this.questionList, newQuestion];
+    }
+
+    generateAnswersForTable(responseAmount: number): Array<string[]> {
+        let answers: Array<string[]> = [];
+        
+        for (let i = 0; i < responseAmount; i++) {
+            answers.push(this.questionList.map(item => {
+                const randomNumber = getRandomInt(item.answerList.length);
+                return item.answerList[randomNumber];
+            }));
+        }
+        return answers;
     }
 }
 
