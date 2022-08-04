@@ -24,7 +24,7 @@ const Question = ({
 
     const onChangeAnswersVariant = (event: React.FormEvent<HTMLTextAreaElement>) => {
         const targetText = event.currentTarget.value;
-        const arr = targetText.split('\n').map(s => s.trim()); 
+        const arr = targetText.split('\n'); 
         const newHeight = event.currentTarget.scrollHeight + 'px';
         if (newHeight !== height) setHeight(newHeight);
 
