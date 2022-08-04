@@ -1,5 +1,9 @@
 import { makeAutoObservable } from 'mobx';
+import getFromStorage from 'shared/utils/getFromStorage';
 import getRandomInt from 'shared/utils/getRandomNumber';
+import saveToStorage from 'shared/utils/saveToStorage';
+
+export const QUESTION_LIST_KEY = 'questionList';
 
 export interface IQuestionListItem {
     id: string;
@@ -15,7 +19,7 @@ export interface IQuestionListStore {
     generateAnswersForTable(responseAmount: number): Array<string[]>
 }
 
-const initialQuestionList: IQuestionListItem[] = [
+const initialQuestionList: IQuestionListItem[] = getFromStorage(QUESTION_LIST_KEY) ? getFromStorage(QUESTION_LIST_KEY) : [
     {
         id: '1',
         title: '',
@@ -44,6 +48,7 @@ class QuestionListStore implements IQuestionListStore {
             };
             this.questionList = this.questionList.map(item => item.id === id ? newQuestion : item);
         }
+        saveToStorage(QUESTION_LIST_KEY, this.questionList);
     }
 
     setAnswerListById(id: string, answerList: string[]) {
@@ -55,6 +60,7 @@ class QuestionListStore implements IQuestionListStore {
             };
             this.questionList = this.questionList.map(item => item.id === id ? newQuestion : item);
         }
+        saveToStorage(QUESTION_LIST_KEY, this.questionList);
     }
 
     addQuestion() {
@@ -64,6 +70,7 @@ class QuestionListStore implements IQuestionListStore {
             answerList: [],
         };
         this.questionList = [ ...this.questionList, newQuestion];
+        saveToStorage(QUESTION_LIST_KEY, this.questionList);
     }
 
     generateAnswersForTable(responseAmount: number): Array<string[]> {
