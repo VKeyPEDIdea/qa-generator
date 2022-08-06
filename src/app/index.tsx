@@ -30,7 +30,7 @@ const App = observer(({
         getQuestionList(projectName);
     };
 
-    if (pathname === '/') {
+    if (pathname === '/qa-generator/build/') {
         page = <ProjectListPage list={projectListKeys}/>;
     } else if (pathname.includes(GENERATOR_PAGE_PATH)) {
         page = <GeneratorPage
