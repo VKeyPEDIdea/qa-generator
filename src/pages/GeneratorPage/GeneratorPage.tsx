@@ -1,6 +1,6 @@
 import Question from 'entities/Question';
 import { IQuestionListItem } from 'features/questionList/questionListStore';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'shared/ui/Button';
 import Table from 'shared/ui/Table';
 import classes from './GeneratorPage.module.scss';
@@ -11,6 +11,7 @@ interface GeneratorPageProps {
     onQuestionAnswerListChange: (id: string, answerList: string[]) => void;
     onQuestionAdd: () => void;
     generateTable: (responseAmount: number) => Array<string[]>;
+    getQuestionList: (projectName: string) => void;
 }
 
 const GeneratorPage = ({
@@ -19,8 +20,15 @@ const GeneratorPage = ({
     onQuestionAnswerListChange,
     onQuestionAdd,
     generateTable,
+    getQuestionList,
 }: GeneratorPageProps) => {
     const [table, setTable] = useState<JSX.Element | null>(null);
+    let projectName: string = '';
+    
+    useEffect(() => {
+        projectName = window.location.pathname.split('/')[2];
+        getQuestionList(projectName);
+    }, []);
 
     const onAddQuestionHandler = () => {
         onQuestionAdd();
@@ -44,6 +52,7 @@ const GeneratorPage = ({
 
     return (
         <div className={classes.container}>
+            <h1>{projectName}</h1>
             {questionList}
             <Button title='Добавить вопрос' onClick={onAddQuestionHandler} />
             <Button title='Сгенерировать таблицу' onClick={onGenerateTableHandler} />

@@ -1,7 +1,20 @@
-const ProjectListPage = () => {
+import Button from 'shared/ui/Button';
+
+interface IProjectListPage {
+    list: string[];
+}
+
+const ProjectListPage = ({
+    list,
+}: IProjectListPage) => {
+    const openNewProject = () => {
+        window.location.assign('/generator/qa-project-' + localStorage.length);
+    };
+
     return (
         <div>
-            <h1>Project List</h1>   
+            <Button title="Новый проект" onClick={openNewProject}/>
+            {list.map(item => <p onClick={() => window.location.assign('/generator/' + item)}>{item}</p>)}
         </div>
     );
 };

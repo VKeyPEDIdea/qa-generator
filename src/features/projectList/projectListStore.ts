@@ -1,6 +1,7 @@
-import getProjectKeysFromStorage from 'shared/utils/getProjectKeysFromStorage';
+import getItemsListByKeyFromStorage from 'shared/utils/getProjectKeysFromStorage';
+import QA_PROJECT_KEY from 'shared/enums/qaProjectKey';
 
-interface IProjectListStore {
+export interface IProjectListStore {
     projectListKeys: string[];
 }
 
@@ -8,9 +9,8 @@ class ProjectListStore implements IProjectListStore {
     projectListKeys: string[];
 
     constructor() {
-        this.projectListKeys = getProjectKeysFromStorage() || [];
+        this.projectListKeys = getItemsListByKeyFromStorage(QA_PROJECT_KEY) || [];
     }
-
 }
 
 export default ProjectListStore;
