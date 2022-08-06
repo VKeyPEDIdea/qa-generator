@@ -29,14 +29,25 @@ const initialQuestionList: IQuestionListItem[] = getFromStorage(QUESTION_LIST_KE
 
 class QuestionListStore implements IQuestionListStore {
     questionList: IQuestionListItem[];
+    projectTitle: string;;
 
     constructor() {
         this.questionList = initialQuestionList;
+        this.projectTitle = 'Новый проект ' + localStorage.length;
         this.setQuestionTitleById = this.setQuestionTitleById.bind(this);
         this.setAnswerListById = this.setAnswerListById.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
         this.generateAnswersForTable = this.generateAnswersForTable.bind(this);
         makeAutoObservable(this);
+    }
+
+    setProjectTitle(title: string) {
+        if (!getFromStorage(title)) {
+            this.projectTitle = title;
+            return true;
+        }
+
+        return false;
     }
 
     setQuestionTitleById(id: string, title: string) {
