@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import './index.scss';
 
 interface AppProps extends AppStore {};
-const GENERATOR_PAGE_PATH = 'generator';
+const GENERATOR_PAGE_PATH = 'qa-generator/build/generator';
 
 const App = observer(({
     store: {

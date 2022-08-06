@@ -10,7 +10,7 @@ const ProjectListPage = ({
     list,
 }: IProjectListPage) => {
     const openNewProject = () => {
-        window.location.assign('/generator/qa-project-' + localStorage.length);
+        window.location.assign('qa-generator/build/generator/qa-project-' + localStorage.length);
     };
 
     return (
