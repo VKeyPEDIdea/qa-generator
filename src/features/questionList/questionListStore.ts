@@ -3,8 +3,6 @@ import getFromStorage from 'shared/utils/getFromStorage';
 import getRandomInt from 'shared/utils/getRandomNumber';
 import saveToStorage from 'shared/utils/saveToStorage';
 
-export const QUESTION_LIST_KEY = 'questionList';
-
 export interface IQuestionListItem {
     id: string;
     title: string;
@@ -16,10 +14,11 @@ export interface IQuestionListStore {
     setQuestionTitleById(id: string, title: string): void;
     setAnswerListById(id: string, answerList: string[]): void;
     addQuestion(): void;
-    generateAnswersForTable(responseAmount: number): Array<string[]>
+    generateAnswersForTable(responseAmount: number): Array<string[]>;
+    getQuestionList(key: string): void;
 }
 
-const initialQuestionList: IQuestionListItem[] = getFromStorage(QUESTION_LIST_KEY) ? getFromStorage(QUESTION_LIST_KEY) : [
+const initialQuestionList: IQuestionListItem[] = [
     {
         id: '1',
         title: '',
@@ -29,14 +28,34 @@ const initialQuestionList: IQuestionListItem[] = getFromStorage(QUESTION_LIST_KE
 
 class QuestionListStore implements IQuestionListStore {
     questionList: IQuestionListItem[];
+    projectTitle: string;;
 
     constructor() {
         this.questionList = initialQuestionList;
+        this.projectTitle = '';
         this.setQuestionTitleById = this.setQuestionTitleById.bind(this);
         this.setAnswerListById = this.setAnswerListById.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
         this.generateAnswersForTable = this.generateAnswersForTable.bind(this);
         makeAutoObservable(this);
+    }
+
+    setProjectTitle(title: string) {
+        if (!getFromStorage(title)) {
+            localStorage.removeItem(this.projectTitle);
+            this.projectTitle = title;
+            saveToStorage(this.projectTitle, this.questionList);
+            return true;
+        }
+
+        return false;
+    }
+
+    getQuestionList = (key: string) => {
+        if (getFromStorage(key)) {
+            this.questionList = getFromStorage(key) || initialQuestionList;
+        }
+        this.projectTitle = key;
     }
 
     setQuestionTitleById(id: string, title: string) {
@@ -48,7 +67,7 @@ class QuestionListStore implements IQuestionListStore {
             };
             this.questionList = this.questionList.map(item => item.id === id ? newQuestion : item);
         }
-        saveToStorage(QUESTION_LIST_KEY, this.questionList);
+        saveToStorage(this.projectTitle, this.questionList);
     }
 
     setAnswerListById(id: string, answerList: string[]) {
@@ -60,7 +79,7 @@ class QuestionListStore implements IQuestionListStore {
             };
             this.questionList = this.questionList.map(item => item.id === id ? newQuestion : item);
         }
-        saveToStorage(QUESTION_LIST_KEY, this.questionList);
+        saveToStorage(this.projectTitle, this.questionList);
     }
 
     addQuestion() {
@@ -70,7 +89,7 @@ class QuestionListStore implements IQuestionListStore {
             answerList: [],
         };
         this.questionList = [ ...this.questionList, newQuestion];
-        saveToStorage(QUESTION_LIST_KEY, this.questionList);
+        saveToStorage(this.projectTitle, this.questionList);
     }
 
     generateAnswersForTable(responseAmount: number): Array<string[]> {
