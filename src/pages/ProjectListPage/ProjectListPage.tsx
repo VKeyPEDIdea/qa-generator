@@ -1,4 +1,6 @@
 import Button from 'shared/ui/Button';
+import classes from './ProjectListPage.module.scss';
+import ProjectList from 'entities/ProjectList/ProjectList';
 
 interface IProjectListPage {
     list: string[];
@@ -12,9 +14,11 @@ const ProjectListPage = ({
     };
 
     return (
-        <div>
-            <Button title="Новый проект" onClick={openNewProject}/>
-            {list.map(item => <p onClick={() => window.location.assign('/generator/' + item)}>{item}</p>)}
+        <div className={classes.container}>
+            <div className={classes.controls}>
+                <Button title="Новый проект" onClick={openNewProject}/>
+            </div>
+            <ProjectList projects={list}/>
         </div>
     );
 };

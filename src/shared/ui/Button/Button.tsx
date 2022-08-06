@@ -1,3 +1,5 @@
+import classes from './Button.module.scss';
+
 interface ButtonProps {
     title: string;
     onClick: () => void;
@@ -8,7 +10,7 @@ const Button = ({
     onClick,
 }: ButtonProps) => {
     return (
-        <button onClick={onClick}>
+        <button className={classes.btn} onClick={onClick}>
             <span>{title}</span>
         </button>
     );
