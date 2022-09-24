@@ -1,6 +1,7 @@
 import Button from 'shared/ui/Button';
 import classes from './ProjectListPage.module.scss';
 import ProjectList from 'entities/ProjectList/ProjectList';
+import { Link } from 'react-router-dom';
 
 interface IProjectListPage {
     list: string[];
@@ -9,14 +10,12 @@ interface IProjectListPage {
 const ProjectListPage = ({
     list,
 }: IProjectListPage) => {
-    const openNewProject = () => {
-        window.location.assign('/generator/qa-project-' + localStorage.length);
-    };
-
     return (
         <div className={classes.container}>
             <div className={classes.controls}>
-                <Button title="Новый проект" onClick={openNewProject}/>
+                <Link to={'/generator/qa-project-' + localStorage.length} >
+                    <Button title="Новый проект"/>
+                </Link>
             </div>
             <ProjectList projects={list}/>
         </div>

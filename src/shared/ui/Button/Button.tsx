@@ -2,7 +2,7 @@ import classes from './Button.module.scss';
 
 interface ButtonProps {
     title: string;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 const Button = ({

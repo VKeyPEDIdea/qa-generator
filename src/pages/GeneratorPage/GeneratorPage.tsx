@@ -1,6 +1,7 @@
 import Question from 'entities/Question';
 import { IQuestionListItem } from 'features/questionList/questionListStore';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from 'shared/ui/Button';
 import Table from 'shared/ui/Table';
 import classes from './GeneratorPage.module.scss';
@@ -23,6 +24,7 @@ const GeneratorPage = ({
     getQuestionList,
 }: GeneratorPageProps) => {
     const [table, setTable] = useState<JSX.Element | null>(null);
+    const [count, setCount] = useState(0);
     let projectName: string = '';
     
     useEffect(() => {
@@ -35,7 +37,7 @@ const GeneratorPage = ({
     };
 
     const onGenerateTableHandler = () => {
-        const content = [...generateTable(980)];
+        const content = [...generateTable(count)];
         
         setTable(<Table content={content}/>);
     };
@@ -52,10 +54,14 @@ const GeneratorPage = ({
 
     return (
         <div className={classes.container}>
+            <Link to='/'>
+                <Button title='Назад в список'/>
+            </Link>
             <h1>{projectName}</h1>
             {questionList}
             <Button title='Добавить вопрос' onClick={onAddQuestionHandler} />
             <Button title='Сгенерировать таблицу' onClick={onGenerateTableHandler} />
+            <input type='text' placeholder='Введите количество ответов' onChange={e => setCount(+e.target.value)}/>
             {table}
         </div>
     );
