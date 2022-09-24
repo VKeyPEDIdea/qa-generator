@@ -2,11 +2,27 @@
 
 .item {
     display: block;
+    position: relative;
     padding: 20px 10px;
-    border-bottom: 1px solid $color-card-border;
     cursor: pointer;
+    transition: $st-trans;
+    border-radius: 8px;
+    margin-bottom: 1px;
+    color: $color-brown;
+    text-decoration: none;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 50%;
+        width: calc(100% - 16px);
+        height: 1px;
+        background-color: $color-card-border;
+        transform: translateX(-50%);
+    }
      
     &:hover {
-        background-color:darken($color-body, 5%);
+        background-color: $color-paper-light;
     }
 }

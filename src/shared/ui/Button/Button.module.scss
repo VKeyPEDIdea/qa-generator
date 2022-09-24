@@ -2,17 +2,19 @@
 
 .btn {
     color: $color-brown;
-    font-size: 17px;
+    font-size: 14px;
     background-color: transparent;
-    border: 1.5px solid $color-brown;
-    border-radius: 6px;
+    border: 1px solid $color-card-border;
+    border-radius: 8px;
     text-transform: uppercase;
-    padding: 6px 12px;
+    padding: 8px 16px;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
+    font-family: $primary-font;
+    transition: $st-trans;
 
     &:hover {
-        background-color: $color-brown;
-        color: $color-body;
+        background-color: $color-paper-light;
+        border: 1px solid $color-brown;
     }
 }

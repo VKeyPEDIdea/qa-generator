@@ -54,14 +54,25 @@ const GeneratorPage = ({
 
     return (
         <div className={classes.container}>
-            <Link to='/'>
-                <Button title='Назад в список'/>
-            </Link>
+            <div className={classes['top-nav']}>
+                <Link to='/'>
+                    <Button title='Назад в список'/>
+                </Link>
+            </div>
             <h1>{projectName}</h1>
             {questionList}
-            <Button title='Добавить вопрос' onClick={onAddQuestionHandler} />
-            <Button title='Сгенерировать таблицу' onClick={onGenerateTableHandler} />
-            <input type='text' placeholder='Введите количество ответов' onChange={e => setCount(+e.target.value)}/>
+            <div className={classes['action-bar']}>
+                <div className={classes['action-bar__item']}>
+                    <Button title='Добавить вопрос' onClick={onAddQuestionHandler} />
+                </div>
+                <div className={classes['action-bar__item']}>
+                    <Button title='Сгенерировать таблицу' onClick={onGenerateTableHandler} />
+                </div>
+                <div className={classes['action-bar__item']}>
+                    <input type='text' placeholder='Введите количество ответов'
+                        onChange={e => setCount(+e.target.value)}/>
+                </div>
+            </div>
             {table}
         </div>
     );
