@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import ButtonIcon from 'shared/ui/ButtonIcon';
 import classes from './ProjectList.module.scss';
 
 const ProjectList = ({ projects }: { projects: string[]}) => {
@@ -7,9 +8,18 @@ const ProjectList = ({ projects }: { projects: string[]}) => {
             {
                 projects.map(item => {
                     return (
-                        <Link to={'/generator/' + item} key={item}>
-                            <li className={classes.item}>{item}</li>
-                        </Link>
+                        <li className={classes.item} key={item}>
+                            <p className={classes.title}>
+                                <Link to={'/generator/' + item}>
+                                    {item}
+                                </Link>
+                            </p>
+                            <div className={classes.actions}>
+                                <div className={classes['actions__item']}>
+                                    <ButtonIcon icon='edit' clickHandler={() => {console.log('edit')}} color='brown'/>
+                                </div>
+                            </div>
+                        </li>
                     ) 
                 })
             }

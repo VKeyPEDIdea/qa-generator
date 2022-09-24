@@ -1,16 +1,15 @@
 @import 'app/styles/vars';
 
 .item {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
     padding: 20px 10px;
-    cursor: pointer;
     transition: $st-trans;
     border-radius: 8px;
     margin-bottom: 1px;
-    color: $color-brown;
-    text-decoration: none;
-
+    
     &::after {
         content: '';
         position: absolute;
@@ -21,8 +20,23 @@
         background-color: $color-card-border;
         transform: translateX(-50%);
     }
-     
+    
     &:hover {
         background-color: $color-paper-light;
+    }
+}
+
+.title, .title a {
+    color: $color-brown;
+    text-decoration: none;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__item {
+        margin-left: 8px;
     }
 }

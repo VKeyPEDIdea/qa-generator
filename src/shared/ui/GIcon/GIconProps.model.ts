@@ -1,7 +1,8 @@
+import Color from 'shared/types/Color.type';
 import { GIconTitle } from './GIconTitle';
 
 export interface GIconProps {
 	title: GIconTitle;
-	color: string;
+	color: Color;
     size?: number;
 } 
