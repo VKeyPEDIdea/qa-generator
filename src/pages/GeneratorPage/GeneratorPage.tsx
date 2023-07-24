@@ -28,7 +28,7 @@ const GeneratorPage = ({
     let projectName: string = '';
     
     useEffect(() => {
-        projectName = window.location.pathname.split('/')[2];
+        projectName = window.location.hash.split('/')[2];
         getQuestionList(projectName);
     }, []);
 
