@@ -148,7 +148,7 @@ class QuestionListStore implements IQuestionListStore {
     getRandomAnswer(answerList: Answer[]): Answer {
         const randomNumber = getRandomInt(answerList.length);
         const selected = answerList[randomNumber];
-        if (selected.count < selected.amount) {
+        if (selected.count <= selected.amount) {
             selected.count++;
             return selected;
         }
