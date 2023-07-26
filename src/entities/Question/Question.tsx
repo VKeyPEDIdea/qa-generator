@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Card from 'shared/ui/Card';
 import classes from './Question.module.scss';
 import { Answer } from 'features/questionList/questionListStore';
+import Button from 'shared/ui/Button/Button';
+import AnswerListItem from 'entities/AnswerListItem';
 
 interface QuestionProps {
     id: string;
@@ -18,6 +20,7 @@ const Question = ({
     onTitleChange,
     onAnswerListChange,
 }: QuestionProps) => {
+    const [answers, setAnswers] = useState<Answer[]>([])
     const [height, setHeight] = useState('auto');
     const onQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onTitleChange(id, e.target.value);
@@ -35,8 +38,14 @@ const Question = ({
         const newHeight = event.currentTarget.scrollHeight + 'px';
         if (newHeight !== height) setHeight(newHeight);
 
-        onAnswerListChange(id, answers);
+        setAnswers(answers);
     };
+    
+    const onAddNewAnswers = () => {
+        onAnswerListChange(id, answers);
+        setAnswers([]);
+        setHeight('auto');
+    }
 
     return (
         <div className={classes.question}>
@@ -56,9 +65,13 @@ const Question = ({
                         style={ { height } }
                         onChange={onChangeAnswersVariant}
                         className={classes.field}
-                        value={answerList.map(({ text }) => text).join('\n')}
+                        value={answers.map(({ text }) => text).join('\n')}
                         placeholder='Ваши ответы' />
                 </div>
+                <div className={classes['action-bar']}>
+                    <Button title='Добавить ответы' onClick={onAddNewAnswers}/>
+                </div>
+                {answerList.map(({ text }) => <AnswerListItem content={text}/>)}
             </Card>
         </div>
     );

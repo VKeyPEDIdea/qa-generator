@@ -19,7 +19,7 @@ export interface IQuestionListItem {
 export interface IQuestionListStore {
     questionList: IQuestionListItem[];
     setQuestionTitleById(id: string, title: string): void;
-    setAnswerListById(id: string, answerList: Answer[]): void;
+    addAnswersByQuestionId(id: string, answerList: Answer[]): void;
     addQuestion(): void;
     generateAnswersForTable(responseAmount: number): Array<Answer[]>;
     getQuestionList(key: string): void;
@@ -41,7 +41,7 @@ class QuestionListStore implements IQuestionListStore {
         this.questionList = initialQuestionList;
         this.projectTitle = '';
         this.setQuestionTitleById = this.setQuestionTitleById.bind(this);
-        this.setAnswerListById = this.setAnswerListById.bind(this);
+        this.addAnswersByQuestionId = this.addAnswersByQuestionId.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
         this.generateAnswersForTable = this.generateAnswersForTable.bind(this);
         makeAutoObservable(this);
@@ -77,14 +77,15 @@ class QuestionListStore implements IQuestionListStore {
         saveToStorage(this.projectTitle, this.questionList);
     }
 
-    setAnswerListById(id: string, answerList: Answer[]) {
+    addAnswersByQuestionId(id: string, answerList: Answer[]) {
         const question = this.questionList.find(item => item.id === id);
         if (question) {
-            const newQuestion = {
+            const updatedAnswerList = [ ...question.answerList, ...answerList ]
+            const updatedQuestion = {
                 ...question,
-                answerList
+                answerList: updatedAnswerList,
             };
-            this.questionList = this.questionList.map(item => item.id === id ? newQuestion : item);
+            this.questionList = this.questionList.map(item => item.id === id ? updatedQuestion : item);
         }
         saveToStorage(this.projectTitle, this.questionList);
     }

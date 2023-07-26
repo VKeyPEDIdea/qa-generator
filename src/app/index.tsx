@@ -13,7 +13,7 @@ const App = observer(({
         questions: {
             questionList,
             setQuestionTitleById,
-            setAnswerListById,
+            addAnswersByQuestionId,
             addQuestion,
             generateAnswersForTable,
             getQuestionList,
@@ -34,7 +34,7 @@ const App = observer(({
                 <Route path={GENERATOR_PAGE_PATH} element={<GeneratorPage
                         list={questionList}
                         onQuestionTitleChange={setQuestionTitleById}
-                        onQuestionAnswerListChange={setAnswerListById}
+                        onQuestionAnswerListChange={addAnswersByQuestionId}
                         onQuestionAdd={addQuestion}
                         generateTable={generateAnswersForTable}
                         getQuestionList={onProjectItemClick}
