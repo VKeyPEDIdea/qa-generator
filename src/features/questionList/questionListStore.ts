@@ -22,7 +22,7 @@ export interface IQuestionListStore {
     setQuestionTitleById(id: string, title: string): void;
     addAnswersByQuestionId(id: string, answerList: Answer[]): void;
     addQuestion(): void;
-    generateAnswersForTable(responseAmount: number): Array<Answer[]>;
+    generateAnswersForTable(numRespondents: number): Array<Answer[]>;
     getQuestionList(key: string): void;
     getAnswerListByQuestionId(id: string): Answer[];
     deleteAnswerByQuestionId(id: string, answerText: string): void;
@@ -116,17 +116,35 @@ class QuestionListStore implements IQuestionListStore {
         }
     }
 
-    generateAnswersForTable(responseAmount: number): Array<Answer[]> {
-        let answers: Array<Answer[]> = [];
+    generateAnswersForTable(numRespondents: number): Array<Answer[]> {
+        const answers: Array<Answer[]> = [];
         
-        for (let i = 0; i < responseAmount; i++) {
-            answers.push(this.questionList.map(item => {
-                const answerList = this.getAnswerListByQuestionId(item.id);
-                const randomNumber = getRandomInt(answerList.length);
-                return answerList[randomNumber];
-            }));
+        for (const answer of this.answerList) {
+            answer.amount = Math.floor((answer.percentage / 100) * numRespondents);
         }
+
+        for (let i = 0; i < numRespondents; i++) {
+            const respondentAnswers: Answer[] = [];
+            for (const item of this.questionList) {
+                const answerList = this.getAnswerListByQuestionId(item.id);
+                const selected: Answer = this.getRandomAnswer(answerList);
+                respondentAnswers.push(selected);                                
+            }
+            answers.push(respondentAnswers);
+        }
+        for (const answer of this.answerList) answer.count = 0;
         return answers;
+    }
+    
+    getRandomAnswer(answerList: Answer[]): Answer {
+        const randomNumber = getRandomInt(answerList.length);
+        const selected = answerList[randomNumber];
+        if (selected.count < selected.amount) {
+            selected.count++;
+            return selected;
+        }
+        
+        return this.getRandomAnswer(answerList);
     }
 
     changeAnswerPercentage = (id: string, answerText: string, percentage: number) => {
