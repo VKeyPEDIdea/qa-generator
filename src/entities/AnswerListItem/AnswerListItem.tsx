@@ -19,7 +19,7 @@ const AnswerListItem = ({
             <div>{content}</div>
             <div className={classes.actions}>
                 <input type='number'
-                    min={1}
+                    min={0}
                     max={100}
                     onChange={onPercentageChange}
                     value={percentage}/>
