@@ -18,7 +18,6 @@ const App = observer(({
             addQuestion,
             generateAnswersForTable,
             getQuestionList,
-            getAnswerListByQuestionId,
         },
         projectList: {
             projectListKeys
