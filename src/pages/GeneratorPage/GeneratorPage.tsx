@@ -14,6 +14,7 @@ interface GeneratorPageProps {
     onQuestionAdd: () => void;
     generateTable: (responseAmount: number) => Array<Answer[]>;
     getQuestionList: (projectName: string) => void;
+    onDeleteAnswer: (id: string, answerText: string) => void;
 }
 
 const GeneratorPage = ({
@@ -24,6 +25,7 @@ const GeneratorPage = ({
     onQuestionAdd,
     generateTable,
     getQuestionList,
+    onDeleteAnswer
 }: GeneratorPageProps) => {
     const [table, setTable] = useState<JSX.Element | null>(null);
     const [count, setCount] = useState(0);
@@ -51,6 +53,7 @@ const GeneratorPage = ({
                 answerList={answers.filter(({ questionId }) => questionId === question.id)}
                 onTitleChange={onQuestionTitleChange}
                 onAnswerListChange={onQuestionAnswerListChange}
+                onDeleteAnswer={onDeleteAnswer}
             />
         );
     });

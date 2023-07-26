@@ -18,6 +18,7 @@ const App = observer(({
             addQuestion,
             generateAnswersForTable,
             getQuestionList,
+            deleteAnswerByQuestionId,
         },
         projectList: {
             projectListKeys
@@ -40,6 +41,7 @@ const App = observer(({
                         onQuestionAdd={addQuestion}
                         generateTable={generateAnswersForTable}
                         getQuestionList={onProjectItemClick}
+                        onDeleteAnswer={deleteAnswerByQuestionId}
                     />}/>
             </Routes>
         </div>

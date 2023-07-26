@@ -25,6 +25,7 @@ export interface IQuestionListStore {
     generateAnswersForTable(responseAmount: number): Array<Answer[]>;
     getQuestionList(key: string): void;
     getAnswerListByQuestionId(id: string): Answer[];
+    deleteAnswerByQuestionId(id: string, answerText: string): void;
 }
 
 const initialQuestionList: IQuestionListItem[] = [
@@ -102,14 +103,15 @@ class QuestionListStore implements IQuestionListStore {
             title: '',
         };
         this.questionList = [ ...this.questionList, newQuestion];
-        saveToStorage(this.projectTitle, this.questionList);
+        this.saveProject();
     }
 
-    deleteAnswerByQuestionId(id: string, answerText: string) {
+    deleteAnswerByQuestionId = (id: string, answerText: string) => {
         const question = this.questionList.find(item => item.id === id);
         if (question) {
-            
-
+            const updatedAnswerList = this.answerList.filter(({ text, questionId }) => questionId !== id || text !== answerText);
+            this.answerList = updatedAnswerList;
+            this.saveProject();
         }
     }
 

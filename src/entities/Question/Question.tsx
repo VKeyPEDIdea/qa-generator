@@ -11,6 +11,7 @@ interface QuestionProps {
     answerList: Answer[];
     onTitleChange: (id: string, title: string) => void;
     onAnswerListChange: (id: string, answerList: Answer[]) => void;
+    onDeleteAnswer: (id: string, answerText: string) => void;
 }
 
 const Question = ({
@@ -19,6 +20,7 @@ const Question = ({
     answerList,
     onTitleChange,
     onAnswerListChange,
+    onDeleteAnswer,
 }: QuestionProps) => {
     const [answers, setAnswers] = useState<Answer[]>([])
     const [height, setHeight] = useState('auto');
@@ -75,7 +77,7 @@ const Question = ({
                 {answerList.map(({ text, percentage }, index) => (
                     <AnswerListItem key={index + text}
                         content={text}
-                        onDelete={() => console.log('delete: ', text)}
+                        onDelete={() => onDeleteAnswer(id, text)}
                         percentage={percentage}
                         onPercentageChange={() => console.log('change percentage')}/>
                 ))}
