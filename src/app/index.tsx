@@ -20,6 +20,7 @@ const App = observer(({
             getQuestionList,
             deleteAnswerByQuestionId,
             changeAnswerPercentage,
+            deleteQuestion
         },
         projectList: {
             projectListKeys
@@ -44,6 +45,7 @@ const App = observer(({
                         getQuestionList={onProjectItemClick}
                         onDeleteAnswer={deleteAnswerByQuestionId}
                         onPercentageChange={changeAnswerPercentage}
+                        onDeleteQuestion={deleteQuestion}
                     />}/>
             </Routes>
         </div>

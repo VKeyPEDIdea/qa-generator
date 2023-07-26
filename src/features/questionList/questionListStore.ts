@@ -3,6 +3,7 @@ import getFromStorage from 'shared/utils/getFromStorage';
 import getRandomInt from 'shared/utils/getRandomNumber';
 import saveToStorage from 'shared/utils/saveToStorage';
 
+let counter = 0;
 export interface Answer {
     text: string;
     percentage: number;
@@ -27,6 +28,7 @@ export interface IQuestionListStore {
     getAnswerListByQuestionId(id: string): Answer[];
     deleteAnswerByQuestionId(id: string, answerText: string): void;
     changeAnswerPercentage(id: string, answerText: string, percentage: number): void;
+    deleteQuestion(id: string): void;
 }
 
 const initialQuestionList: IQuestionListItem[] = [
@@ -100,25 +102,32 @@ class QuestionListStore implements IQuestionListStore {
 
     addQuestion() {
         const newQuestion: IQuestionListItem = {
-            id: String(this.questionList.length + 1),
+            id: counter + '',
             title: '',
         };
+        counter++;
         this.questionList = [ ...this.questionList, newQuestion];
         this.saveProject();
     }
 
-    deleteAnswerByQuestionId = (id: string, answerText: string) => {
-        const question = this.questionList.find(item => item.id === id);
-        if (question) {
-            const updatedAnswerList = this.answerList.filter(({ text, questionId }) => questionId !== id || text !== answerText);
-            this.answerList = updatedAnswerList;
-            this.saveProject();
-        }
+    deleteAnswerByQuestionId = (id: string, answerText?: string) => {
+        const filterByIdAndText = ({ text, questionId }: Answer) => questionId !== id || text !== answerText;
+        const filterById = ({ questionId }: Answer) => questionId !== id;
+        const updatedAnswerList = this.answerList.filter(answerText ? filterByIdAndText : filterById);
+        this.answerList = updatedAnswerList;
+        this.saveProject();
     }
+
+    deleteQuestion = (id: string) => {
+        const updatedQuestionList = this.questionList.filter(item => item.id !== id);
+        this.questionList = [ ... updatedQuestionList ];
+        this.deleteAnswerByQuestionId(id);
+        this.saveProject();
+    } 
 
     generateAnswersForTable(numRespondents: number): Array<Answer[]> {
         const answers: Array<Answer[]> = [];
-        
+
         for (const answer of this.answerList) {
             answer.amount = Math.floor((answer.percentage / 100) * numRespondents);
         }

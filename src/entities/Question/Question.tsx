@@ -9,20 +9,24 @@ interface QuestionProps {
     id: string;
     title: string;
     answerList: Answer[];
+    serialNumber: number;
     onTitleChange: (id: string, title: string) => void;
     onAnswerListChange: (id: string, answerList: Answer[]) => void;
     onDeleteAnswer: (id: string, answerText: string) => void;
     onPercentageChange: (id: string, answerText: string, percentage: number) => void;
+    onDeleteQuestion(id: string): void;
 }
 
 const Question = ({
     id,
     title,
     answerList,
+    serialNumber,
     onTitleChange,
     onAnswerListChange,
     onDeleteAnswer,
-    onPercentageChange
+    onPercentageChange,
+    onDeleteQuestion
 }: QuestionProps) => {
     const [answers, setAnswers] = useState<Answer[]>([])
     const [height, setHeight] = useState('auto');
@@ -62,7 +66,7 @@ const Question = ({
     return (
         <div className={classes.question}>
             <Card>
-                <p className={classes.label}>{id} Вопрос</p>
+                <p className={classes.label}>{serialNumber} Вопрос</p>
                 <div className={classes.input}>
                     <input type='text'
                         placeholder='Введите вопрос'
@@ -82,6 +86,7 @@ const Question = ({
                 </div>
                 <div className={classes['action-bar']}>
                     <Button title='Добавить ответы' onClick={onAddNewAnswers}/>
+                    <Button title='Удалить вопрос' onClick={() => onDeleteQuestion(id)} />
                 </div>
                 {answerList.map(({ text, percentage }, index) => (
                     <AnswerListItem key={index + text}
