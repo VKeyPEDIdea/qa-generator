@@ -1,5 +1,5 @@
 import Question from 'entities/Question';
-import { IQuestionListItem } from 'features/questionList/questionListStore';
+import { Answer, IQuestionListItem } from 'features/questionList/questionListStore';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'shared/ui/Button';
@@ -9,9 +9,9 @@ import classes from './GeneratorPage.module.scss';
 interface GeneratorPageProps {
     list: IQuestionListItem[];
     onQuestionTitleChange: (id: string, title: string) => void;
-    onQuestionAnswerListChange: (id: string, answerList: string[]) => void;
+    onQuestionAnswerListChange: (id: string, answerList: Answer[]) => void;
     onQuestionAdd: () => void;
-    generateTable: (responseAmount: number) => Array<string[]>;
+    generateTable: (responseAmount: number) => Array<Answer[]>;
     getQuestionList: (projectName: string) => void;
 }
 

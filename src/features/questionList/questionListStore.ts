@@ -3,18 +3,25 @@ import getFromStorage from 'shared/utils/getFromStorage';
 import getRandomInt from 'shared/utils/getRandomNumber';
 import saveToStorage from 'shared/utils/saveToStorage';
 
+export interface Answer {
+    text: string;
+    percentage: number;
+    amount: number;
+    count: number;
+}
+
 export interface IQuestionListItem {
     id: string;
     title: string;
-    answerList: string[];
+    answerList: Answer[];
 }
 
 export interface IQuestionListStore {
     questionList: IQuestionListItem[];
     setQuestionTitleById(id: string, title: string): void;
-    setAnswerListById(id: string, answerList: string[]): void;
+    setAnswerListById(id: string, answerList: Answer[]): void;
     addQuestion(): void;
-    generateAnswersForTable(responseAmount: number): Array<string[]>;
+    generateAnswersForTable(responseAmount: number): Array<Answer[]>;
     getQuestionList(key: string): void;
 }
 
@@ -70,7 +77,7 @@ class QuestionListStore implements IQuestionListStore {
         saveToStorage(this.projectTitle, this.questionList);
     }
 
-    setAnswerListById(id: string, answerList: string[]) {
+    setAnswerListById(id: string, answerList: Answer[]) {
         const question = this.questionList.find(item => item.id === id);
         if (question) {
             const newQuestion = {
@@ -92,8 +99,8 @@ class QuestionListStore implements IQuestionListStore {
         saveToStorage(this.projectTitle, this.questionList);
     }
 
-    generateAnswersForTable(responseAmount: number): Array<string[]> {
-        let answers: Array<string[]> = [];
+    generateAnswersForTable(responseAmount: number): Array<Answer[]> {
+        let answers: Array<Answer[]> = [];
         
         for (let i = 0; i < responseAmount; i++) {
             answers.push(this.questionList.map(item => {

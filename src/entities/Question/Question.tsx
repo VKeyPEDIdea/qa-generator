@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import Card from 'shared/ui/Card';
 import classes from './Question.module.scss';
+import { Answer } from 'features/questionList/questionListStore';
 
 interface QuestionProps {
     id: string;
     title: string;
-    answerList: string[];
+    answerList: Answer[];
     onTitleChange: (id: string, title: string) => void;
-    onAnswerListChange: (id: string, answerList: string[]) => void;
+    onAnswerListChange: (id: string, answerList: Answer[]) => void;
 }
 
 const Question = ({
@@ -24,11 +25,17 @@ const Question = ({
 
     const onChangeAnswersVariant = (event: React.FormEvent<HTMLTextAreaElement>) => {
         const targetText = event.currentTarget.value;
-        const arr = targetText.split('\n'); 
+        const arr = targetText.split('\n');
+        const answers: Answer[] = arr.map(res => ({
+            text: res,
+            amount: 0,
+            count: 0,
+            percentage: +res.split('%%')[1],
+        }));
         const newHeight = event.currentTarget.scrollHeight + 'px';
         if (newHeight !== height) setHeight(newHeight);
 
-        onAnswerListChange(id, arr);
+        onAnswerListChange(id, answers);
     };
 
     return (
@@ -49,7 +56,7 @@ const Question = ({
                         style={ { height } }
                         onChange={onChangeAnswersVariant}
                         className={classes.field}
-                        value={answerList.join('\n')}
+                        value={answerList.map(({ text }) => text).join('\n')}
                         placeholder='Ваши ответы' />
                 </div>
             </Card>

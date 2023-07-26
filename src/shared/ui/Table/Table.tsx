@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import Button from '../Button';
+import { Answer } from 'features/questionList/questionListStore';
 
 interface TableProps {
-    content: Array<string[]>;
+    content: Array<Answer[]>;
 }
 
 const Table = ({
@@ -43,7 +44,7 @@ const Table = ({
                 <tbody>
                     {
                         content.map((row, index) => {
-                            return <tr key={'tr' + index}>{row.map((cell, i) => <td key={'td' + i}>{cell}</td>)}</tr>;
+                            return <tr key={'tr' + index}>{row.map((cell, i) => <td key={'td' + i}>{cell.text}</td>)}</tr>;
                         })
                     }
                 </tbody>
