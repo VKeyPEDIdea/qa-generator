@@ -42,7 +42,7 @@ const Question = ({
             text: res,
             amount: 0,
             count: 0,
-            percentage: 0,
+            percentage: 100,
             questionId: id,
         }));
         const newHeight = event.currentTarget.scrollHeight + 'px';
