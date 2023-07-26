@@ -8,42 +8,46 @@ export interface Answer {
     percentage: number;
     amount: number;
     count: number;
+    questionId: string;
 }
 
 export interface IQuestionListItem {
     id: string;
     title: string;
-    answerList: Answer[];
 }
 
 export interface IQuestionListStore {
     questionList: IQuestionListItem[];
+    answerList: Answer[];
     setQuestionTitleById(id: string, title: string): void;
     addAnswersByQuestionId(id: string, answerList: Answer[]): void;
     addQuestion(): void;
     generateAnswersForTable(responseAmount: number): Array<Answer[]>;
     getQuestionList(key: string): void;
+    getAnswerListByQuestionId(id: string): Answer[];
 }
 
 const initialQuestionList: IQuestionListItem[] = [
     {
         id: '1',
         title: '',
-        answerList: [],
     },
 ];
 
 class QuestionListStore implements IQuestionListStore {
     questionList: IQuestionListItem[];
-    projectTitle: string;;
+    answerList: Answer[];
+    projectTitle: string;
 
     constructor() {
         this.questionList = initialQuestionList;
+        this.answerList = [];
         this.projectTitle = '';
         this.setQuestionTitleById = this.setQuestionTitleById.bind(this);
         this.addAnswersByQuestionId = this.addAnswersByQuestionId.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
         this.generateAnswersForTable = this.generateAnswersForTable.bind(this);
+        this.saveProject = this.saveProject.bind(this);
         makeAutoObservable(this);
     }
 
@@ -51,7 +55,7 @@ class QuestionListStore implements IQuestionListStore {
         if (!getFromStorage(title)) {
             localStorage.removeItem(this.projectTitle);
             this.projectTitle = title;
-            saveToStorage(this.projectTitle, this.questionList);
+            this.saveProject();
             return true;
         }
 
@@ -59,10 +63,17 @@ class QuestionListStore implements IQuestionListStore {
     }
 
     getQuestionList = (key: string) => {
-        if (getFromStorage(key)) {
-            this.questionList = getFromStorage(key) || initialQuestionList;
+        const response = getFromStorage(key); 
+        if (response) {
+            const { questionList, answerList } = response;
+            this.questionList = questionList || initialQuestionList;
+            this.answerList = answerList || [];
         }
         this.projectTitle = key;
+    }
+
+    getAnswerListByQuestionId = (id: string): Answer[] => {
+        return this.answerList.filter(({ questionId }) => questionId === id);
     }
 
     setQuestionTitleById(id: string, title: string) {
@@ -74,30 +85,32 @@ class QuestionListStore implements IQuestionListStore {
             };
             this.questionList = this.questionList.map(item => item.id === id ? newQuestion : item);
         }
-        saveToStorage(this.projectTitle, this.questionList);
+        this.saveProject();
     }
 
     addAnswersByQuestionId(id: string, answerList: Answer[]) {
         const question = this.questionList.find(item => item.id === id);
         if (question) {
-            const updatedAnswerList = [ ...question.answerList, ...answerList ]
-            const updatedQuestion = {
-                ...question,
-                answerList: updatedAnswerList,
-            };
-            this.questionList = this.questionList.map(item => item.id === id ? updatedQuestion : item);
+            this.answerList = [ ...this.answerList, ...answerList ];
         }
-        saveToStorage(this.projectTitle, this.questionList);
+        this.saveProject();
     }
 
     addQuestion() {
         const newQuestion: IQuestionListItem = {
             id: String(this.questionList.length + 1),
             title: '',
-            answerList: [],
         };
         this.questionList = [ ...this.questionList, newQuestion];
         saveToStorage(this.projectTitle, this.questionList);
+    }
+
+    deleteAnswerByQuestionId(id: string, answerText: string) {
+        const question = this.questionList.find(item => item.id === id);
+        if (question) {
+            
+
+        }
     }
 
     generateAnswersForTable(responseAmount: number): Array<Answer[]> {
@@ -105,11 +118,16 @@ class QuestionListStore implements IQuestionListStore {
         
         for (let i = 0; i < responseAmount; i++) {
             answers.push(this.questionList.map(item => {
-                const randomNumber = getRandomInt(item.answerList.length);
-                return item.answerList[randomNumber];
+                const answerList = this.getAnswerListByQuestionId(item.id);
+                const randomNumber = getRandomInt(answerList.length);
+                return answerList[randomNumber];
             }));
         }
         return answers;
+    }
+
+    saveProject() {
+        saveToStorage(this.projectTitle, { questionList: this.questionList, answerList: this.answerList });
     }
 }
 

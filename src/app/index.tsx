@@ -12,11 +12,13 @@ const App = observer(({
     store: {
         questions: {
             questionList,
+            answerList,
             setQuestionTitleById,
             addAnswersByQuestionId,
             addQuestion,
             generateAnswersForTable,
             getQuestionList,
+            getAnswerListByQuestionId,
         },
         projectList: {
             projectListKeys
@@ -32,7 +34,8 @@ const App = observer(({
             <Routes>
                 <Route path="/" element={<ProjectListPage list={projectListKeys} />} />
                 <Route path={GENERATOR_PAGE_PATH} element={<GeneratorPage
-                        list={questionList}
+                        questions={questionList}
+                        answers={answerList}
                         onQuestionTitleChange={setQuestionTitleById}
                         onQuestionAnswerListChange={addAnswersByQuestionId}
                         onQuestionAdd={addQuestion}

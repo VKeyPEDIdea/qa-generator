@@ -39,7 +39,7 @@ const Table = ({
 
     return (
         <>
-            <Button title='Скопировать таблицу' onClick={onCopyTableHandler} />
+            <Button title='Выделить таблицу' onClick={onCopyTableHandler} />
             <table ref={tableH} id='myTable'>
                 <tbody>
                     {

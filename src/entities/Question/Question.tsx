@@ -33,7 +33,8 @@ const Question = ({
             text: res,
             amount: 0,
             count: 0,
-            percentage: +res.split('%%')[1],
+            percentage: 0,
+            questionId: id,
         }));
         const newHeight = event.currentTarget.scrollHeight + 'px';
         if (newHeight !== height) setHeight(newHeight);
@@ -45,7 +46,7 @@ const Question = ({
         onAnswerListChange(id, answers);
         setAnswers([]);
         setHeight('auto');
-    }
+    };
 
     return (
         <div className={classes.question}>
@@ -71,7 +72,13 @@ const Question = ({
                 <div className={classes['action-bar']}>
                     <Button title='Добавить ответы' onClick={onAddNewAnswers}/>
                 </div>
-                {answerList.map(({ text }) => <AnswerListItem content={text}/>)}
+                {answerList.map(({ text, percentage }, index) => (
+                    <AnswerListItem key={index + text}
+                        content={text}
+                        onDelete={() => console.log('delete: ', text)}
+                        percentage={percentage}
+                        onPercentageChange={() => console.log('change percentage')}/>
+                ))}
             </Card>
         </div>
     );

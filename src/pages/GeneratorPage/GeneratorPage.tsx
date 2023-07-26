@@ -7,7 +7,8 @@ import Table from 'shared/ui/Table';
 import classes from './GeneratorPage.module.scss';
 
 interface GeneratorPageProps {
-    list: IQuestionListItem[];
+    questions: IQuestionListItem[];
+    answers: Answer[];
     onQuestionTitleChange: (id: string, title: string) => void;
     onQuestionAnswerListChange: (id: string, answerList: Answer[]) => void;
     onQuestionAdd: () => void;
@@ -16,7 +17,8 @@ interface GeneratorPageProps {
 }
 
 const GeneratorPage = ({
-    list,
+    questions,
+    answers,
     onQuestionTitleChange,
     onQuestionAnswerListChange,
     onQuestionAdd,
@@ -42,10 +44,11 @@ const GeneratorPage = ({
         setTable(<Table content={content}/>);
     };
 
-    const questionList = list.map(question => {
+    const questionList = questions.map(question => {
         return (
             <Question key={question.id}
                 {...question}
+                answerList={answers.filter(({ questionId }) => questionId === question.id)}
                 onTitleChange={onQuestionTitleChange}
                 onAnswerListChange={onQuestionAnswerListChange}
             />
