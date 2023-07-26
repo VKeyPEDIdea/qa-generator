@@ -5,7 +5,7 @@ interface AnswerListItemProps {
     content: string;
     percentage: number;
     onDelete: () => void;
-    onPercentageChange: () => void;
+    onPercentageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const AnswerListItem = ({

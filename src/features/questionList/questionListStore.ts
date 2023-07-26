@@ -26,6 +26,7 @@ export interface IQuestionListStore {
     getQuestionList(key: string): void;
     getAnswerListByQuestionId(id: string): Answer[];
     deleteAnswerByQuestionId(id: string, answerText: string): void;
+    changeAnswerPercentage(id: string, answerText: string, percentage: number): void;
 }
 
 const initialQuestionList: IQuestionListItem[] = [
@@ -126,6 +127,14 @@ class QuestionListStore implements IQuestionListStore {
             }));
         }
         return answers;
+    }
+
+    changeAnswerPercentage = (id: string, answerText: string, percentage: number) => {
+        const targetAnswer = this.answerList.find(({ text, questionId }) => questionId === id && text === answerText);
+        if (targetAnswer) {
+            targetAnswer.percentage = percentage;
+            this.saveProject();
+        }
     }
 
     saveProject() {

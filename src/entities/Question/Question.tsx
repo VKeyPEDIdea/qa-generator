@@ -12,6 +12,7 @@ interface QuestionProps {
     onTitleChange: (id: string, title: string) => void;
     onAnswerListChange: (id: string, answerList: Answer[]) => void;
     onDeleteAnswer: (id: string, answerText: string) => void;
+    onPercentageChange: (id: string, answerText: string, percentage: number) => void;
 }
 
 const Question = ({
@@ -21,9 +22,11 @@ const Question = ({
     onTitleChange,
     onAnswerListChange,
     onDeleteAnswer,
+    onPercentageChange
 }: QuestionProps) => {
     const [answers, setAnswers] = useState<Answer[]>([])
     const [height, setHeight] = useState('auto');
+    const forceUpdate = useState(false)[1];
     const onQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onTitleChange(id, e.target.value);
     };
@@ -48,6 +51,12 @@ const Question = ({
         onAnswerListChange(id, answers);
         setAnswers([]);
         setHeight('auto');
+    };
+
+    const onPercentageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>, text: string) => {
+        const percentage = +event.target.value;
+        onPercentageChange(id, text, percentage);
+        forceUpdate(value => !value);
     };
 
     return (
@@ -79,7 +88,7 @@ const Question = ({
                         content={text}
                         onDelete={() => onDeleteAnswer(id, text)}
                         percentage={percentage}
-                        onPercentageChange={() => console.log('change percentage')}/>
+                        onPercentageChange={(e) => onPercentageChangeHandler(e, text)}/>
                 ))}
             </Card>
         </div>

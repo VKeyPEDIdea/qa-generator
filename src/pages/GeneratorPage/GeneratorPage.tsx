@@ -15,6 +15,7 @@ interface GeneratorPageProps {
     generateTable: (responseAmount: number) => Array<Answer[]>;
     getQuestionList: (projectName: string) => void;
     onDeleteAnswer: (id: string, answerText: string) => void;
+    onPercentageChange(id: string, answerText: string, percentage: number): void;
 }
 
 const GeneratorPage = ({
@@ -25,7 +26,8 @@ const GeneratorPage = ({
     onQuestionAdd,
     generateTable,
     getQuestionList,
-    onDeleteAnswer
+    onDeleteAnswer,
+    onPercentageChange,
 }: GeneratorPageProps) => {
     const [table, setTable] = useState<JSX.Element | null>(null);
     const [count, setCount] = useState(0);
@@ -54,6 +56,7 @@ const GeneratorPage = ({
                 onTitleChange={onQuestionTitleChange}
                 onAnswerListChange={onQuestionAnswerListChange}
                 onDeleteAnswer={onDeleteAnswer}
+                onPercentageChange={onPercentageChange}
             />
         );
     });

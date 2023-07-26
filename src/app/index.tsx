@@ -19,6 +19,7 @@ const App = observer(({
             generateAnswersForTable,
             getQuestionList,
             deleteAnswerByQuestionId,
+            changeAnswerPercentage,
         },
         projectList: {
             projectListKeys
@@ -42,6 +43,7 @@ const App = observer(({
                         generateTable={generateAnswersForTable}
                         getQuestionList={onProjectItemClick}
                         onDeleteAnswer={deleteAnswerByQuestionId}
+                        onPercentageChange={changeAnswerPercentage}
                     />}/>
             </Routes>
         </div>
