@@ -1,5 +1,6 @@
-import Button from 'shared/ui/Button/Button';
+import Button from 'shared/ui/Button';
 import classes from './AnswerListItem.module.scss';
+import InputNumber from 'shared/ui/InputNumber';
 
 interface AnswerListItemProps {
     content: string;
@@ -18,11 +19,11 @@ const AnswerListItem = ({
         <div className={classes.answer}>
             <div>{content}</div>
             <div className={classes.actions}>
-                <input type='number'
+                <InputNumber value={percentage}
+                    onChange={onPercentageChange}
                     min={0}
                     max={100}
-                    onChange={onPercentageChange}
-                    value={percentage}/>
+                />
                 <Button title='Удалить' onClick={onDelete}/>
             </div>
         </div>

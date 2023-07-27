@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from 'shared/ui/Button';
 import Table from 'shared/ui/Table';
 import classes from './GeneratorPage.module.scss';
+import InputNumber from 'shared/ui/InputNumber';
 
 interface GeneratorPageProps {
     questions: IQuestionListItem[];
@@ -82,8 +83,9 @@ const GeneratorPage = ({
                     <Button title='Сгенерировать таблицу' onClick={onGenerateTableHandler} />
                 </div>
                 <div className={classes['action-bar__item']}>
-                    <input type='text' placeholder='Введите количество ответов'
-                        onChange={e => setCount(+e.target.value)}/>
+                    <InputNumber value={count}
+                        onChange={e => setCount(+e.target.value)}
+                    />
                 </div>
             </div>
             {table}
