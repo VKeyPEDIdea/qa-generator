@@ -3,7 +3,6 @@ import getFromStorage from 'shared/utils/getFromStorage';
 import getRandomInt from 'shared/utils/getRandomNumber';
 import saveToStorage from 'shared/utils/saveToStorage';
 
-let counter = 0;
 export interface Answer {
     text: string;
     percentage: number;
@@ -20,6 +19,7 @@ export interface IQuestionListItem {
 export interface IQuestionListStore {
     questionList: IQuestionListItem[];
     answerList: Answer[];
+    counter: number;
     setQuestionTitleById(id: string, title: string): void;
     addAnswersByQuestionId(id: string, answerList: Answer[]): void;
     addQuestion(): void;
@@ -42,17 +42,25 @@ class QuestionListStore implements IQuestionListStore {
     questionList: IQuestionListItem[];
     answerList: Answer[];
     projectTitle: string;
+    counter: number;
 
     constructor() {
         this.questionList = initialQuestionList;
         this.answerList = [];
         this.projectTitle = '';
+        this.counter = 0;
         this.setQuestionTitleById = this.setQuestionTitleById.bind(this);
         this.addAnswersByQuestionId = this.addAnswersByQuestionId.bind(this);
         this.addQuestion = this.addQuestion.bind(this);
         this.generateAnswersForTable = this.generateAnswersForTable.bind(this);
         this.saveProject = this.saveProject.bind(this);
+        this.init();
         makeAutoObservable(this);
+    }
+
+    init() {
+        const idList = this.questionList.map(({id}) => +id);
+        this.counter = Math.max(...idList) + 1;
     }
 
     setProjectTitle(title: string) {
@@ -102,10 +110,10 @@ class QuestionListStore implements IQuestionListStore {
 
     addQuestion() {
         const newQuestion: IQuestionListItem = {
-            id: counter + '',
+            id: this.counter + '',
             title: '',
         };
-        counter++;
+        this.counter++;
         this.questionList = [ ...this.questionList, newQuestion];
         this.saveProject();
     }
