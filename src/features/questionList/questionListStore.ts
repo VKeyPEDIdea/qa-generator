@@ -136,8 +136,8 @@ class QuestionListStore implements IQuestionListStore {
             const respondentAnswers: Answer[] = [];
             for (const item of this.questionList) {
                 const answerList = this.getAnswerListByQuestionId(item.id);
-                const selected: Answer = this.getRandomAnswer(answerList);
-                respondentAnswers.push(selected);                                
+                const selected = this.getRandomAnswer(answerList);
+                if (selected) respondentAnswers.push(selected);                                
             }
             answers.push(respondentAnswers);
         }
@@ -145,15 +145,16 @@ class QuestionListStore implements IQuestionListStore {
         return answers;
     }
     
-    getRandomAnswer(answerList: Answer[]): Answer {
+    getRandomAnswer(answerList: Answer[]): Answer | null {
         const randomNumber = getRandomInt(answerList.length);
         const selected = answerList[randomNumber];
-        if (selected.count <= selected.amount) {
+        if (selected.count < selected.amount) {
             selected.count++;
             return selected;
         }
-        
-        return this.getRandomAnswer(answerList);
+        const reducedList = answerList.filter(answer => answer.text !== selected.text);
+        if (reducedList.length) return this.getRandomAnswer(reducedList);
+        return null;
     }
 
     changeAnswerPercentage = (id: string, answerText: string, percentage: number) => {
