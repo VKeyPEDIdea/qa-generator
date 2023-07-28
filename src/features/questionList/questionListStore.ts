@@ -54,13 +54,7 @@ class QuestionListStore implements IQuestionListStore {
         this.addQuestion = this.addQuestion.bind(this);
         this.generateAnswersForTable = this.generateAnswersForTable.bind(this);
         this.saveProject = this.saveProject.bind(this);
-        this.init();
         makeAutoObservable(this);
-    }
-
-    init() {
-        const idList = this.questionList.map(({id}) => +id);
-        this.counter = Math.max(...idList) + 1;
     }
 
     setProjectTitle(title: string) {
@@ -81,6 +75,8 @@ class QuestionListStore implements IQuestionListStore {
             this.questionList = questionList || initialQuestionList;
             this.answerList = answerList || [];
         }
+        const idList = this.questionList.map(({id}) => +id);
+        this.counter = Math.max(...idList) + 1;
         this.projectTitle = key;
     }
 
