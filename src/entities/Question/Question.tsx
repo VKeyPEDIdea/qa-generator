@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Card from 'shared/ui/Card';
-import classes from './Question.module.scss';
+import classes from './Question.module.css';
 import { Answer } from 'features/questionList/questionListStore';
 import Button from 'shared/ui/Button/Button';
 import AnswerListItem from 'entities/AnswerListItem';

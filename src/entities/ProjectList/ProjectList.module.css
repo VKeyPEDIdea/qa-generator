@@ -1,0 +1,40 @@
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 20px 10px;
+    transition: var(--st-trans);
+    border-radius: 8px;
+    margin-bottom: 1px;   
+}
+
+.item::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    width: calc(100% - 16px);
+    height: 1px;
+    background-color: var(--color-card-border);
+    transform: translateX(-50%);
+}
+
+.item:hover {
+    background-color: var(--color-paper-light);
+}
+
+.title, .title a {
+    color: var(--color-brown);
+    text-decoration: none;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.actions__item {
+    margin-left: 8px;
+}

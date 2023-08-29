@@ -1,0 +1,17 @@
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.top-nav {
+    margin: 20px 0;
+}
+
+.action-bar {
+    display: flex;
+    margin: 20px 0;
+}
+
+.action-bar__item {
+    margin-right: 8px;
+}

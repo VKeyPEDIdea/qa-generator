@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import ButtonIcon from 'shared/ui/ButtonIcon';
-import classes from './ProjectList.module.scss';
+import classes from './ProjectList.module.css';
 
 const ProjectList = ({ projects }: { projects: string[]}) => {
     return (

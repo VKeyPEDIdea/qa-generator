@@ -1,7 +1,7 @@
 import Color from 'shared/types/Color.type';
 import GIcon from '../GIcon';
 import { GIconTitle } from '../GIcon/GIconTitle';
-import classes from './ButtonIcon.module.scss';
+import classes from './ButtonIcon.module.css';
 
 interface ButtonIconProps {
     icon: GIconTitle;
