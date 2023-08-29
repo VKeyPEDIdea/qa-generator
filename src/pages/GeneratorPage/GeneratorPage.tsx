@@ -1,11 +1,15 @@
 import Question from 'entities/Question';
 import { Answer, IQuestionListItem } from 'features/questionList/questionListStore';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Button from 'shared/ui/Button';
 import Table from 'shared/ui/Table';
 import classes from './GeneratorPage.module.scss';
 import InputNumber from 'shared/ui/InputNumber';
+
+const containerClass = classes.container;
+const topNavClass = classes['top-nav'];
+const actionBarClass = classes['action-bar__item'];
 
 interface GeneratorPageProps {
     questions: IQuestionListItem[];
@@ -34,12 +38,11 @@ const GeneratorPage = ({
 }: GeneratorPageProps) => {
     const [table, setTable] = useState<JSX.Element | null>(null);
     const [count, setCount] = useState(0);
-    let projectName: string = '';
+    const { projectName } = useParams();
     
     useEffect(() => {
-        projectName = window.location.hash.split('/')[2];
-        getQuestionList(projectName);
-    }, []);
+        getQuestionList(projectName || '');
+    }, [projectName]);
 
     const onAddQuestionHandler = () => {
         onQuestionAdd();
@@ -47,7 +50,6 @@ const GeneratorPage = ({
 
     const onGenerateTableHandler = () => {
         const content = [...generateTable(count)];
-        
         setTable(<Table content={content}/>);
     };
 
@@ -67,22 +69,21 @@ const GeneratorPage = ({
     });
 
     return (
-        <div className={classes.container}>
-            <div className={classes['top-nav']}>
+        <div className={containerClass}>
+            <div className={topNavClass}>
                 <Link to='/'>
                     <Button title='Назад в список'/>
                 </Link>
             </div>
-            <h1>{projectName}</h1>
             {questionList}
             <div className={classes['action-bar']}>
-                <div className={classes['action-bar__item']}>
+                <div className={actionBarClass}>
                     <Button title='Добавить вопрос' onClick={onAddQuestionHandler} />
                 </div>
-                <div className={classes['action-bar__item']}>
+                <div className={actionBarClass}>
                     <Button title='Сгенерировать таблицу' onClick={onGenerateTableHandler} />
                 </div>
-                <div className={classes['action-bar__item']}>
+                <div className={actionBarClass}>
                     <InputNumber value={count}
                         onChange={e => setCount(+e.target.value)}
                     />
