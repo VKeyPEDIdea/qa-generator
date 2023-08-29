@@ -1,5 +1,26 @@
 {
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb-typescript-prettier",
+    "plugin:testing-library/react", 
+    "plugin:promise/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "plugins": [
+    "testing-library",
+    "promise",
+    "jsx-a11y",
+    "@typescript-eslint"
+  ],
   "env": {
     "es6": true,
     "node": true,
@@ -13,7 +34,6 @@
     "no-use-before-define": "off",
     "linebreak-style": "off",
     "camelcase": "off",
-    "no-param-reassign": "off",
     "no-tabs": "off",
     "arrow-parens": "off",
     "no-confusing-arrow": "off",
@@ -27,7 +47,44 @@
     "one-var-declaration-per-line": "off",
     "no-underscore-dangle": "off",
     "no-continue": "off",
-    "quotes": ["error", "single", { "avoidEscape": true }]
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "no-multi-spaces": "error",
+    "import/no-unresolved": "error",
+    "react/no-multi-comp": "error",
+    "react/jsx-pascal-case": "error",
+    "react/jsx-closing-bracket-location": "error",
+    "react/jsx-closing-tag-location": "error",
+    "react/jsx-tag-spacing": "error",
+    "react/jsx-boolean-value": "error",
+    "react/no-array-index-key": "error",
+    "react/jsx-wrap-multilines": "error",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
+    "jsx-quotes": ["error", "prefer-double"],
+    "jsx-a11y/alt-text": "error",
+    "jsx-a11y/img-redundant-alt": "error",
+    "jsx-a11y/aria-role": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true
+      }
+    ],
+    "no-restricted-exports": [
+      "off",
+      {
+        "restrictedNamedExports": ["default"]
+      }
+    ],
+    "no-param-reassign": [
+      "error",
+      {
+        "ignorePropertyModificationsFor": ["state"]
+      }
+    ]
   }
-  // "extends":  ["airbnb/base"]
 }
