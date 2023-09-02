@@ -45,7 +45,7 @@ const GIcon = ({
 			<svg xmlns="http://www.w3.org/2000/svg"
 				width={sizeValue}
 				height={sizeValue}
-				viewBox="0 0 24 24">
+				viewBox={`0 0 ${sizeValue} ${sizeValue}`}>
 				{pathes}
 			</svg>
 		</>
