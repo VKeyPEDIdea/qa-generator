@@ -1,0 +1,63 @@
+2023-07-13T06:25:06	{ db: [Function (anonymous)] }
+2023-07-13T06:25:06	{ db: [Function (anonymous)] }
+2023-07-13T06:25:16	{ db: [Function (anonymous)] }
+2023-07-13T06:25:16	{ db: [Function (anonymous)] }
+2023-07-13T09:39:09	Static on port 8000
+2023-07-13T09:39:09	API on port 8001
+2023-07-13T09:52:37	Static on port 8000
+2023-07-13T09:52:37	API on port 8001
+2023-07-13T09:56:53	Static on port 8000
+2023-07-13T09:56:53	API on port 8001
+2023-07-13T09:58:16	Static on port 8000
+2023-07-13T09:58:16	API on port 8001
+2023-07-13T09:58:20	place user
+2023-07-13T09:58:20	name read
+2023-07-13T09:58:20	method 3
+2023-07-13T10:00:22	Static on port 8000
+2023-07-13T10:00:22	API on port 8001
+2023-07-13T10:00:44	Static on port 8000
+2023-07-13T10:00:44	API on port 8001
+2023-07-13T10:00:46	::ffff:127.0.0.1 user.read(3)
+2023-07-13T10:01:14	Static on port 8000
+2023-07-13T10:01:14	API on port 8001
+2023-07-13T10:01:16	::ffff:127.0.0.1 user.read(3)
+2023-07-13T10:02:24	Static on port 8000
+2023-07-13T10:02:24	API on port 8001
+2023-07-13T10:02:53	Static on port 8000
+2023-07-13T10:02:53	API on port 8001
+2023-07-13T10:02:56	::ffff:127.0.0.1 user.read(3)
+2023-07-13T10:03:22	Static on port 8000
+2023-07-13T10:03:22	API on port 8001
+2023-07-13T10:03:25	::ffff:127.0.0.1 user.read(3)
+2023-07-13T10:03:26	::ffff:127.0.0.1 user.read(3)
+2023-07-13T10:03:59	Static on port 8000
+2023-07-13T10:03:59	API on port 8001
+2023-07-13T10:04:35	Static on port 8000
+2023-07-13T10:04:35	API on port 8001
+2023-07-13T10:04:38	::ffff:127.0.0.1 read /api/user/read/3
+2023-07-13T10:04:58	Static on port 8000
+2023-07-13T10:04:58	API on port 8001
+2023-07-13T10:05:01	::ffff:127.0.0.1 read /api/user/read/3
+2023-07-13T10:05:32	::ffff:127.0.0.1 read /api/user/read/1
+2023-07-13T10:05:40	::ffff:127.0.0.1 read /api/user/read/1
+2023-07-13T10:07:28	Static on port 8000
+2023-07-13T10:07:28	API on port 8001
+2023-07-13T10:07:59	Static on port 8000
+2023-07-13T10:07:59	API on port 8001
+2023-07-13T10:08:28	Static on port 8000
+2023-07-13T10:08:28	API on port 8001
+2023-07-13T10:09:07	Static on port 8000
+2023-07-13T10:09:07	API on port 8001
+2023-07-13T10:09:21	Static on port 8000
+2023-07-13T10:09:21	API on port 8001
+2023-07-13T10:09:22	::ffff:127.0.0.1 read /user/read/3
+2023-07-13T10:10:14	Static on port 8000
+2023-07-13T10:10:14	API on port 8001
+2023-07-13T10:10:16	::ffff:127.0.0.1 read /user/read/3
+2023-07-13T10:11:10	Static on port 8000
+2023-07-13T10:11:10	API on port 8001
+2023-07-13T10:11:11	::ffff:127.0.0.1 user.read(3)
+2023-07-13T10:24:46	Static on port 8000
+2023-07-13T10:24:46	API on port 8001
+2023-07-13T10:25:16	Static on port 8000
+2023-07-13T10:25:16	API on port 8001
