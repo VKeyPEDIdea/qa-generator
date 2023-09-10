@@ -1,21 +1,19 @@
-@import 'app/styles/vars';
-
 .answer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
     padding: 8px 8px 8px 12px;
-    border-bottom: 1px solid $color-card-border;
+    border-bottom: 1px solid var(--color-card-border);
     font-size: 16px;
     line-height: 20px;
     font-weight: 500;
-    color: $color-on-body;
-    font-family: $primary-font;
+    color: var(--color-on-body);
+    font-family: var(--primary-font);
+}
 
-    &:last-child {
-        border: none;
-    }
+.answer:last-child {
+    border: none;
 }
 
 .actions {

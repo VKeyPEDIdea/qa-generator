@@ -1,5 +1,5 @@
 import Button from 'shared/ui/Button';
-import classes from './ProjectListPage.module.scss';
+import classes from './ProjectListPage.module.css';
 import ProjectList from 'entities/ProjectList/ProjectList';
 import { Link } from 'react-router-dom';
 

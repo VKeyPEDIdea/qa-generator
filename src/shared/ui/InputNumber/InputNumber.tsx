@@ -1,4 +1,4 @@
-import classes from './InputNumber.module.scss';
+import classes from './InputNumber.module.css';
 
 interface InputNumber {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

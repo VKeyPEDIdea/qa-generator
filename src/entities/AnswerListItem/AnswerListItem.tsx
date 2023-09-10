@@ -1,5 +1,5 @@
 import Button from 'shared/ui/Button';
-import classes from './AnswerListItem.module.scss';
+import classes from './AnswerListItem.module.css';
 import InputNumber from 'shared/ui/InputNumber';
 
 interface AnswerListItemProps {

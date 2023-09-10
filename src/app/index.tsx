@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import GeneratorPage from 'pages/GeneratorPage';
 import ProjectListPage from 'pages/ProjectListPage/ProjectListPage';
 import { Route, Routes } from 'react-router';
-import './index.scss';
+import './index.css';
 
 interface AppProps extends AppStore {};
 const GENERATOR_PAGE_PATH = '/generator/:projectName';

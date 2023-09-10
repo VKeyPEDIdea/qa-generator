@@ -1,0 +1,18 @@
+.btn {
+    color: var(--color-brown);
+    font-size: 14px;
+    background-color: transparent;
+    border: 1px solid var(--color-card-border);
+    border-radius: 8px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: var(--primary-font);
+    transition: var(--st-trans);
+
+  }
+.btn:hover {
+    background-color: var(--color-paper-light);
+    border: 1px solid var(--color-brown);
+}

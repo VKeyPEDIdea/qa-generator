@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Button from 'shared/ui/Button';
 import Table from 'shared/ui/Table';
-import classes from './GeneratorPage.module.scss';
+import classes from './GeneratorPage.module.css';
 import InputNumber from 'shared/ui/InputNumber';
 
 const containerClass = classes.container;

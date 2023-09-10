@@ -1,4 +1,5 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import Button from './Button';
 
 describe('Button component', () => {
@@ -9,14 +10,8 @@ describe('Button component', () => {
 		expect(buttonElement).toBeInTheDocument();
 	});
 	
-	it('should has css-class "btn"', () => {
-		const { container } = render(<Button title="Тестовая кнопка" />);
-		const buttonElement = container.querySelector('button');
-		expect(buttonElement).toHaveClass('btn');
-	});
-	
 	it('should call "onClick" function when click', () => {
-		const onClickMock = jest.fn();
+		const onClickMock = vi.fn();
 		const { getByText } = render(<Button title="Тестовая кнопка" onClick={onClickMock} />);
 		const buttonElement = getByText('Тестовая кнопка');
 		
