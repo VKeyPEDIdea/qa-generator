@@ -36,7 +36,7 @@ module.exports = (routing, port, console) => {
         if (signature.includes('{')) args.push(await receiveArgs(req));
         console.log(`${socket.remoteAddress} ${method} ${url}`);
         const result = await handler(...args);
-        res.end(JSON.stringify(result.rows));
+        res.end(JSON.stringify(result));
     }).listen(port);
 
     console.log(`API on port ${port}`);
