@@ -6,7 +6,7 @@ const path = require('node:path');
 const server = require(`./transport/${config.api.transport}.js`);
 const staticServer = require('./lib/static.js');
 const load = require('./lib/load.js')(config.sandbox);
-const db = require('./lib/db.js')(config.dbPool);
+const db = require('./lib/db.js');
 const hash = require('./lib/common.js');
 const logger = require('./lib/logger.js');
 
@@ -27,6 +27,6 @@ const routing = {};
         routing[serviceName] = await load(filePath, sandbox);
     }
 
-    staticServer('./static', config.static.port, logger);
+    staticServer(config.static.root, config.static.port, logger);
     server(routing, config.api.port, logger);
 })();
