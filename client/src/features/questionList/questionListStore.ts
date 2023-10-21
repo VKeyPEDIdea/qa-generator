@@ -1,3 +1,4 @@
+import api from 'api';
 import { makeAutoObservable } from 'mobx';
 import getFromStorage from 'shared/utils/getFromStorage';
 import getRandomInt from 'shared/utils/getRandomNumber';
@@ -93,7 +94,7 @@ class QuestionListStore implements IQuestionListStore {
             };
             this.questionList = this.questionList.map(item => item.id === id ? newQuestion : item);
         }
-        this.saveProject();
+        api.question.update(id, title);
     }
 
     addAnswersByQuestionId(id: string, answerList: Answer[]) {

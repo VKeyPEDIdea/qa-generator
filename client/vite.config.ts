@@ -10,6 +10,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      api: path.resolve(__dirname, 'src/api'),
       app: path.resolve(__dirname, 'src/app'),
       entities: path.resolve(__dirname, 'src/entities'),
       features: path.resolve(__dirname, 'src/features'),
