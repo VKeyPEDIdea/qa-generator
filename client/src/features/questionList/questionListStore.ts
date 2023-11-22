@@ -94,7 +94,7 @@ class QuestionListStore implements IQuestionListStore {
             };
             this.questionList = this.questionList.map(item => item.id === id ? newQuestion : item);
         }
-        api.question.update(id, title);
+        api.question.update(id, title, this.projectTitle);
     }
 
     addAnswersByQuestionId(id: string, answerList: Answer[]) {

@@ -1,21 +1,25 @@
 import api from 'api';
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 
 export interface IProjectListStore {
     projectListKeys: string[];
+    loadProjectList: () => void;
 }
 
 class ProjectListStore implements IProjectListStore {
-    projectListKeys: string[];
+    projectListKeys: string[] = [];
 
     constructor() {
-        this.projectListKeys = [];
+        this.loadProjectList = this.loadProjectList.bind(this);
         makeAutoObservable(this);
-        this.init();
     }
 
-    async init() {
-      this.projectListKeys = await api.general.getProjectList();
+    loadProjectList() {
+        api.general.getProjectList().then(res => {
+            runInAction(() => {
+                this.projectListKeys = res;
+            });
+        });
     }
 }
 

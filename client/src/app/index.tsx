@@ -5,7 +5,7 @@ import ProjectListPage from 'pages/ProjectListPage/ProjectListPage';
 import { Route, Routes } from 'react-router';
 import './index.css';
 
-interface AppProps extends AppStore {};
+export interface AppProps extends AppStore {};
 const GENERATOR_PAGE_PATH = '/generator/:projectName';
 
 const App = observer(({
@@ -23,18 +23,19 @@ const App = observer(({
             deleteQuestion
         },
         projectList: {
-            projectListKeys
+            projectListKeys,
+            loadProjectList,
         }
     }
 }: AppProps) => {
     const onProjectItemClick = (projectName: string) => {
         getQuestionList(projectName);
     };
-
+    
     return (
         <div className="App">
             <Routes>
-                <Route path="/" element={<ProjectListPage list={projectListKeys} />} />
+                <Route path="/" element={<ProjectListPage list={projectListKeys} loadList={loadProjectList}/>} />
                 <Route path={GENERATOR_PAGE_PATH} element={<GeneratorPage
                         questions={questionList}
                         answers={answerList}

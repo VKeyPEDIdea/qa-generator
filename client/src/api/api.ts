@@ -1,11 +1,10 @@
 import debounce from "shared/utils/debounce";
 
 const API_URL = 'http://localhost:8001/';
-const projectName = 'test';
 
 const api = {
 	question: {
-		update: debounce((id: string, title: string) => {
+		update: debounce((id: string, title: string, projectName: string) => {
 			fetch(`${API_URL}${projectName}/question/update/${id}`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -15,12 +14,9 @@ const api = {
 	},
 	general: {
 		getProjectList: async () => {
-			const projectList = await fetch(`${API_URL}${projectName}/general/getProjectList`, {
+			const projectList = await fetch(`${API_URL}/general/getProjectList`, {
 				method: 'POST',
-			}).then(res => {
-				console.log('project list response', res);
-				return res.json();
-			});
+			}).then(res => res.json());
 			return projectList as string[];
 		},
 	}
