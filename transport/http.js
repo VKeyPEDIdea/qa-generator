@@ -25,6 +25,7 @@ module.exports = (routing, port, console) => {
         if (req.method !== 'POST') return void res.end('"Not found"');
         const { url, socket } = req;
         const [project, name, method, id] = url.substring(1).split('/');
+        console.log(project, name, method);
         const entity = routing[name];
         if (!entity) void res.end('Not found');
         const handler = entity[method];
@@ -37,6 +38,7 @@ module.exports = (routing, port, console) => {
         if (signature.includes('{')) args.push(await receiveArgs(req));
         console.log(`${socket.remoteAddress} ${method} ${url}`);
         const result = await handler(...args);
+        console.log(result);
         res.end(JSON.stringify(result));
     }).listen(port);
 
