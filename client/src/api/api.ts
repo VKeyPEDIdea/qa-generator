@@ -12,6 +12,14 @@ const api = {
 			}).then(res => res);
 		})
 	},
+	project: {
+		getQuestionList: async (projectName: string) => {
+			const list = await fetch(`${API_URL}${projectName}/project/getQuestionList`, {
+				method: 'POST'
+			});
+			return list.json();
+		}, 
+	},
 	general: {
 		getProjectList: async () => {
 			const projectList = await fetch(`${API_URL}/general/getProjectList`, {
