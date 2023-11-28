@@ -1,5 +1,5 @@
 import api from 'api';
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import getFromStorage from 'shared/utils/getFromStorage';
 import getRandomInt from 'shared/utils/getRandomNumber';
 import saveToStorage from 'shared/utils/saveToStorage';
@@ -69,12 +69,14 @@ class QuestionListStore implements IQuestionListStore {
         return false;
     }
 
-    getQuestionList = (key: string) => {
-        const response = getFromStorage(key); 
+    getQuestionList = async (key: string) => {
+        const response = await api.project.getQuestionList(key); 
         if (response) {
             const { questionList, answerList } = response;
-            this.questionList = questionList || initialQuestionList;
-            this.answerList = answerList || [];
+            runInAction(() => {
+                this.questionList = questionList || initialQuestionList;
+                this.answerList = answerList || [];
+            });
         }
         const idList = this.questionList.map(({id}) => +id);
         this.counter = Math.max(...idList) + 1;
