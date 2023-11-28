@@ -1,6 +1,7 @@
 'use strict';
 
 const config = require('./config.js');
+const fs = require('node:fs');
 const fsp = require('node:fs').promises;
 const path = require('node:path');
 const server = require(`./transport/${config.api.transport}.js`);
@@ -14,7 +15,7 @@ const sandbox = {
     console: Object.freeze(logger),
     db: Object.freeze(db),
     common: { hash },
-    fsp: Object.freeze(fsp),
+    fs: Object.freeze(fs),
     config: Object.freeze(config),
 };
 const apiPath = path.join(process.cwd(), './api');
