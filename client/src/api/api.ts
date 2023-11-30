@@ -1,3 +1,4 @@
+import { Answer } from "features/questionList/questionListStore";
 import debounce from "shared/utils/debounce";
 
 const API_URL = 'http://localhost:8001/';
@@ -11,6 +12,15 @@ const api = {
 				body: JSON.stringify({ title }),
 			}).then(res => res);
 		})
+	},
+	answer: {
+		create: (answers: Answer[], projectName: string) => {
+			fetch(`${API_URL}${projectName}/answer/create`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ answers }),
+			})
+		},
 	},
 	project: {
 		getQuestionList: async (projectName: string) => {
