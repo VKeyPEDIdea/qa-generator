@@ -15,4 +15,7 @@ declare namespace config {
   const hashSettings: {
     encodingScheme: string;
   }
+  const projects: {
+    path: string;
+  };
 }
