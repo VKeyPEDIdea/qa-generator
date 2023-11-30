@@ -104,7 +104,7 @@ class QuestionListStore implements IQuestionListStore {
         if (question) {
             this.answerList = [ ...this.answerList, ...answerList ];
         }
-        this.saveProject();
+        api.answer.create(answerList, this.projectTitle);
     }
 
     addQuestion() {
