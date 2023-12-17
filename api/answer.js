@@ -1,14 +1,23 @@
+const getAnswerDir = (projectName) => {
+    return `${config.projects.path}/${projectName}/answers`;
+};
+
 ({
-    create: (projectName, { ...answers }) => {
-        const path = `${config.projects.path}/${projectName}/answers`;
-        const files = fs.readdirSync(path);
+    create: (projectName, { answers }) => {
+        const path = getAnswerDir(projectName);
         Object.values(answers).forEach(data => {
-            let nextFileName = files.length + 1;
-            fs.writeFile(`${path}/${nextFileName}.json`, JSON.stringify(data), (err) => {
+            const cb = fileName => err => {
                 if (err) throw err;
-                console.log(`New answer has been added: ${nextFileName}.json`);
-            })
-            nextFileName += 1;
+                console.log(`New answer has been added: ${projectName} ${fileName}.json`);
+            };
+            fs.writeFile(`${path}/${data.id}.json`, JSON.stringify(data), cb(data.id));
+        });
+    },
+    delete: (projectName, id) => {
+        const path = getAnswerDir(projectName);
+        fs.rm(`${path}/${id}.json`, (err) => {
+            if (err) console.log(err);
+            console.log('Answer has been deleted: ', `${projectName} ${path}/${id}.json`);
         });
     },
 });

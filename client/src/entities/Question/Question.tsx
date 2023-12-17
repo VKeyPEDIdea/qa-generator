@@ -11,8 +11,8 @@ interface QuestionProps {
     answerList: Answer[];
     serialNumber: number;
     onTitleChange: (id: string, title: string) => void;
-    onAnswerListChange: (id: string, answerList: Answer[]) => void;
-    onDeleteAnswer: (id: string, answerText: string) => void;
+    onAnswerListChange: (id: number, answerList: Omit<Answer, 'id'>[]) => void;
+    onDeleteAnswer: (id: number) => void;
     onPercentageChange: (id: string, answerText: string, percentage: number) => void;
     onDeleteQuestion(id: string): void;
 }
@@ -28,7 +28,7 @@ const Question = ({
     onPercentageChange,
     onDeleteQuestion
 }: QuestionProps) => {
-    const [answers, setAnswers] = useState<Answer[]>([])
+    const [answers, setAnswers] = useState<Omit<Answer, 'id'>[]>([])
     const [height, setHeight] = useState('auto');
     const forceUpdate = useState(false)[1];
     const onQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ const Question = ({
     const onChangeAnswersVariant = (event: React.FormEvent<HTMLTextAreaElement>) => {
         const targetText = event.currentTarget.value;
         const arr = targetText.split('\n');
-        const answers: Answer[] = arr.map(res => ({
+        const answers: Omit<Answer, 'id'>[] = arr.map(res => ({
             text: res,
             amount: 0,
             count: 0,
@@ -52,7 +52,7 @@ const Question = ({
     };
     
     const onAddNewAnswers = () => {
-        onAnswerListChange(id, answers);
+        onAnswerListChange(Number(id), answers);
         setAnswers([]);
         setHeight('auto');
     };
@@ -88,10 +88,10 @@ const Question = ({
                     <Button title='Добавить ответы' onClick={onAddNewAnswers}/>
                     <Button title='Удалить вопрос' onClick={() => onDeleteQuestion(id)} />
                 </div>
-                {answerList.map(({ text, percentage }, index) => (
+                {answerList.map(({ text, percentage, id }, index) => (
                     <AnswerListItem key={index + text}
                         content={text}
-                        onDelete={() => onDeleteAnswer(id, text)}
+                        onDelete={() => onDeleteAnswer(id)}
                         percentage={percentage}
                         onPercentageChange={(e) => onPercentageChangeHandler(e, text)}/>
                 ))}

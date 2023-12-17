@@ -18,7 +18,7 @@ const App = observer(({
             addQuestion,
             generateAnswersForTable,
             getQuestionList,
-            deleteAnswerByQuestionId,
+            deleteAnswer,
             changeAnswerPercentage,
             deleteQuestion
         },
@@ -44,7 +44,7 @@ const App = observer(({
                         onQuestionAdd={addQuestion}
                         generateTable={generateAnswersForTable}
                         getQuestionList={onProjectItemClick}
-                        onDeleteAnswer={deleteAnswerByQuestionId}
+                        onDeleteAnswer={deleteAnswer}
                         onPercentageChange={changeAnswerPercentage}
                         onDeleteQuestion={deleteQuestion}
                     />}/>

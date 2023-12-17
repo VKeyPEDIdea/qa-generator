@@ -5,6 +5,7 @@ import getRandomInt from 'shared/utils/getRandomNumber';
 import saveToStorage from 'shared/utils/saveToStorage';
 
 export interface Answer {
+    id: number;
     text: string;
     percentage: number;
     amount: number;
@@ -28,6 +29,7 @@ export interface IQuestionListStore {
     getQuestionList(key: string): void;
     getAnswerListByQuestionId(id: string): Answer[];
     deleteAnswerByQuestionId(id: string, answerText: string): void;
+    deleteAnswer(id: number): void;
     changeAnswerPercentage(id: string, answerText: string, percentage: number): void;
     deleteQuestion(id: string): void;
 }
@@ -99,12 +101,22 @@ class QuestionListStore implements IQuestionListStore {
         api.question.update(id, title, this.projectTitle);
     }
 
-    addAnswersByQuestionId(id: string, answerList: Answer[]) {
+    addAnswersByQuestionId(id: string, answerList: Omit<Answer, 'id'>[]) {
         const question = this.questionList.find(item => item.id === id);
-        if (question) {
-            this.answerList = [ ...this.answerList, ...answerList ];
-        }
-        api.answer.create(answerList, this.projectTitle);
+        let newId = this.answerList.length
+            ? this.answerList[this.answerList.length - 1].id + 1
+            : 0;
+        const patchedAnswers = answerList.map(a => {
+            const answer = {
+                id: newId,
+                ...a,
+            };
+            newId += 1;
+            return answer;
+        });
+
+        if (question) this.answerList = [ ...this.answerList, ...patchedAnswers ];
+        api.answer.create(patchedAnswers, this.projectTitle);
     }
 
     addQuestion() {
@@ -122,7 +134,12 @@ class QuestionListStore implements IQuestionListStore {
         const filterById = ({ questionId }: Answer) => questionId !== id;
         const updatedAnswerList = this.answerList.filter(answerText ? filterByIdAndText : filterById);
         this.answerList = updatedAnswerList;
-        this.saveProject();
+    }
+
+    deleteAnswer = (id: number) => {
+        const updatedAnswerList = this.answerList.filter(answer => answer.id !== id);
+        this.answerList = updatedAnswerList;
+        api.answer.delete(id, this.projectTitle);
     }
 
     deleteQuestion = (id: string) => {

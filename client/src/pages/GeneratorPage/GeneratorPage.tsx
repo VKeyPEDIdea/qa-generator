@@ -15,11 +15,11 @@ interface GeneratorPageProps {
     questions: IQuestionListItem[];
     answers: Answer[];
     onQuestionTitleChange: (id: string, title: string) => void;
-    onQuestionAnswerListChange: (id: string, answerList: Answer[]) => void;
+    onQuestionAnswerListChange: (id: number, answerList: Omit<Answer, 'id'>[]) => void;
     onQuestionAdd: () => void;
     generateTable: (responseAmount: number) => Array<Answer[]>;
     getQuestionList: (projectName: string) => void;
-    onDeleteAnswer: (id: string, answerText: string) => void;
+    onDeleteAnswer: (id: number) => void;
     onPercentageChange(id: string, answerText: string, percentage: number): void;
     onDeleteQuestion(id: string): void;
 }
