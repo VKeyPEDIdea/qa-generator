@@ -55,7 +55,7 @@ const GeneratorPage = ({
 
     const questionList = questions.map((question, index) => {
         return (
-            <Question key={question.id}
+            <Question key={question.id + question.title}
                 {...question}
                 serialNumber={index + 1}
                 answerList={answers.filter(({ questionId }) => questionId === question.id)}
