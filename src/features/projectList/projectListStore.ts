@@ -1,15 +1,25 @@
-import getItemsListByKeyFromStorage from 'shared/utils/getProjectKeysFromStorage';
-import QA_PROJECT_KEY from 'shared/enums/qaProjectKey';
+import api from 'api';
+import { makeAutoObservable, runInAction } from 'mobx';
 
 export interface IProjectListStore {
     projectListKeys: string[];
+    loadProjectList: () => void;
 }
 
 class ProjectListStore implements IProjectListStore {
-    projectListKeys: string[];
+    projectListKeys: string[] = [];
 
     constructor() {
-        this.projectListKeys = getItemsListByKeyFromStorage(QA_PROJECT_KEY) || [];
+        this.loadProjectList = this.loadProjectList.bind(this);
+        makeAutoObservable(this);
+    }
+
+    loadProjectList() {
+        api.general.getProjectList().then(res => {
+            runInAction(() => {
+                this.projectListKeys = res;
+            });
+        });
     }
 }
 

@@ -1,9 +1,11 @@
-import { makeAutoObservable } from 'mobx';
+import api from 'api';
+import { makeAutoObservable, runInAction } from 'mobx';
 import getFromStorage from 'shared/utils/getFromStorage';
 import getRandomInt from 'shared/utils/getRandomNumber';
 import saveToStorage from 'shared/utils/saveToStorage';
 
 export interface Answer {
+    id: number;
     text: string;
     percentage: number;
     amount: number;
@@ -27,6 +29,7 @@ export interface IQuestionListStore {
     getQuestionList(key: string): void;
     getAnswerListByQuestionId(id: string): Answer[];
     deleteAnswerByQuestionId(id: string, answerText: string): void;
+    deleteAnswer(id: number): void;
     changeAnswerPercentage(id: string, answerText: string, percentage: number): void;
     deleteQuestion(id: string): void;
 }
@@ -68,12 +71,14 @@ class QuestionListStore implements IQuestionListStore {
         return false;
     }
 
-    getQuestionList = (key: string) => {
-        const response = getFromStorage(key); 
+    getQuestionList = async (key: string) => {
+        const response = await api.project.getQuestionList(key); 
         if (response) {
             const { questionList, answerList } = response;
-            this.questionList = questionList || initialQuestionList;
-            this.answerList = answerList || [];
+            runInAction(() => {
+                this.questionList = questionList || initialQuestionList;
+                this.answerList = answerList || [];
+            });
         }
         const idList = this.questionList.map(({id}) => +id);
         this.counter = Math.max(...idList) + 1;
@@ -93,15 +98,25 @@ class QuestionListStore implements IQuestionListStore {
             };
             this.questionList = this.questionList.map(item => item.id === id ? newQuestion : item);
         }
-        this.saveProject();
+        api.question.update(id, title, this.projectTitle);
     }
 
-    addAnswersByQuestionId(id: string, answerList: Answer[]) {
+    addAnswersByQuestionId(id: string, answerList: Omit<Answer, 'id'>[]) {
         const question = this.questionList.find(item => item.id === id);
-        if (question) {
-            this.answerList = [ ...this.answerList, ...answerList ];
-        }
-        this.saveProject();
+        let newId = this.answerList.length
+            ? this.answerList[this.answerList.length - 1].id + 1
+            : 0;
+        const patchedAnswers = answerList.map(a => {
+            const answer = {
+                id: newId,
+                ...a,
+            };
+            newId += 1;
+            return answer;
+        });
+
+        if (question) this.answerList = [ ...this.answerList, ...patchedAnswers ];
+        api.answer.create(patchedAnswers, this.projectTitle);
     }
 
     addQuestion() {
@@ -119,7 +134,12 @@ class QuestionListStore implements IQuestionListStore {
         const filterById = ({ questionId }: Answer) => questionId !== id;
         const updatedAnswerList = this.answerList.filter(answerText ? filterByIdAndText : filterById);
         this.answerList = updatedAnswerList;
-        this.saveProject();
+    }
+
+    deleteAnswer = (id: number) => {
+        const updatedAnswerList = this.answerList.filter(answer => answer.id !== id);
+        this.answerList = updatedAnswerList;
+        api.answer.delete(id, this.projectTitle);
     }
 
     deleteQuestion = (id: string) => {
