@@ -1,31 +1,61 @@
 {
-  "name": "qa-generator-application",
-  "version": "9.0.0",
-  "description": "qa-generator",
-  "license": "MIT",
+  "name": "qa-generator",
+  "version": "0.1.0",
   "private": true,
-  "main": "main.js",
-  "types": "global.d.ts",
   "scripts": {
-    "test": "npm run lint && tsc",
-    "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.ts\"",
-    "fmt": "prettier --write \"**/*.js\" \"**/*.ts\""
-  },
-  "engines": {
-    "node": "14 || 16 || 18"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:cov": "vitest run --coverage",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx src --fix",
+    "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx src --fix"
   },
   "dependencies": {
-    "ws": "^8.12.0"
+    "mobx": "^6.6.1",
+    "mobx-react-lite": "^3.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
-    "@types/node": "^20.4.4",
-    "@types/pg": "^8.10.2",
-    "@types/ws": "^8.5.5",
-    "eslint": "^8.45.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-import": "^2.27.5",
+    "@testing-library/jest-dom": "^6.1.2",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/node": "^20.5.7",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.4",
+    "eslint": "^8.48.0",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-airbnb-typescript-prettier": "^5.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^5.0.0",
-    "prettier": "^3.0.0",
-    "typescript": "^5.1.6"
-  }
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-testing-library": "^6.0.1",
+    "jsdom": "^22.1.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "homepage": "."
 }
