@@ -6,6 +6,7 @@ import Button from 'shared/ui/Button';
 import Table from 'shared/ui/Table';
 import classes from './GeneratorPage.module.css';
 import InputNumber from 'shared/ui/InputNumber';
+import useGetQuestionList from './hooks/useGetQuestionList.tsx';
 
 const containerClass = classes.container;
 const topNavClass = classes['top-nav'];
@@ -38,12 +39,8 @@ const GeneratorPage = ({
 }: GeneratorPageProps) => {
     const [table, setTable] = useState<JSX.Element | null>(null);
     const [count, setCount] = useState(0);
-    const { projectName } = useParams();
     
-    useEffect(() => {
-        getQuestionList(projectName || '');
-    }, [projectName]);
-
+    useGetQuestionList(getQuestionList);
     const onAddQuestionHandler = () => {
         onQuestionAdd();
     };
