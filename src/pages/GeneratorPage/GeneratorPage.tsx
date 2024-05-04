@@ -26,10 +26,6 @@ const GeneratorPage = () => {
     } = useStore();
     useQuestionList();
 
-    const onAddQuestionHandler = () => {
-        addQuestion();
-    };
-
     const onGenerateTableHandler = () => {
         const content = [...generateAnswersForTable(count)];
         setTable(<Table content={content}/>);
@@ -60,7 +56,7 @@ const GeneratorPage = () => {
             }
             <ActionBar>
                 <ActionBarItem>
-                    <Button title='Добавить вопрос' onClick={onAddQuestionHandler} />
+                    <Button title='Добавить вопрос' onClick={addQuestion} />
                 </ActionBarItem>
                 <ActionBarItem>
                     <Button title='Сгенерировать таблицу' onClick={onGenerateTableHandler} />
