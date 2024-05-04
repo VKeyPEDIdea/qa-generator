@@ -6,7 +6,7 @@ import Button from 'shared/ui/Button';
 import Table from 'shared/ui/Table';
 import classes from './GeneratorPage.module.css';
 import InputNumber from 'shared/ui/InputNumber';
-import useGetQuestionList from './hooks/useGetQuestionList.tsx';
+import useGetQuestionList from './hooks/useGetQuestionList';
 
 const containerClass = classes.container;
 const topNavClass = classes['top-nav'];
