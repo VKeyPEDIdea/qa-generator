@@ -1,12 +1,12 @@
 import Question from 'entities/Question';
 import { Answer, IQuestionListItem } from 'features/questionList/questionListStore';
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from 'shared/ui/Button';
 import Table from 'shared/ui/Table';
 import classes from './GeneratorPage.module.css';
 import InputNumber from 'shared/ui/InputNumber';
-import useGetQuestionList from './hooks/useGetQuestionList.tsx';
+import useQuestionList from './hooks/useQuestionList';
 
 const containerClass = classes.container;
 const topNavClass = classes['top-nav'];
@@ -40,7 +40,7 @@ const GeneratorPage = ({
     const [table, setTable] = useState<JSX.Element | null>(null);
     const [count, setCount] = useState(0);
     
-    useGetQuestionList(getQuestionList);
+    useQuestionList(getQuestionList);
     const onAddQuestionHandler = () => {
         onQuestionAdd();
     };

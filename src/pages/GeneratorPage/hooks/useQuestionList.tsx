@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
-const useGetQuestionList = (queryFn) => {
+const useQuestionList = (queryFn: (projectName: string) => void) => {
 	const { projectName } = useParams();
     
 	useEffect(() => {
@@ -9,5 +9,5 @@ const useGetQuestionList = (queryFn) => {
 	}, [projectName]);
 };
 
-export default useGetQuestionList;
+export default useQuestionList;
 
