@@ -4,13 +4,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'shared/ui/Button';
 import Table from 'shared/ui/Table';
-import classes from './GeneratorPage.module.css';
 import InputNumber from 'shared/ui/InputNumber';
 import useQuestionList from './hooks/useQuestionList';
-
-const containerClass = classes.container;
-const topNavClass = classes['top-nav'];
-const actionBarClass = classes['action-bar__item'];
+import { ActionBar, ActionBarItem, Container, TopNavigation } from './styled';
 
 interface GeneratorPageProps {
     questions: IQuestionListItem[];
@@ -66,28 +62,28 @@ const GeneratorPage = ({
     });
 
     return (
-        <div className={containerClass}>
-            <div className={topNavClass}>
+        <Container>
+            <TopNavigation>
                 <Link to='/'>
                     <Button title='Назад в список'/>
                 </Link>
-            </div>
+            </TopNavigation>
             {questionList}
-            <div className={classes['action-bar']}>
-                <div className={actionBarClass}>
+            <ActionBar>
+                <ActionBarItem>
                     <Button title='Добавить вопрос' onClick={onAddQuestionHandler} />
-                </div>
-                <div className={actionBarClass}>
+                </ActionBarItem>
+                <ActionBarItem>
                     <Button title='Сгенерировать таблицу' onClick={onGenerateTableHandler} />
-                </div>
-                <div className={actionBarClass}>
+                </ActionBarItem>
+                <ActionBarItem>
                     <InputNumber value={count}
                         onChange={e => setCount(+e.target.value)}
                     />
-                </div>
-            </div>
+                </ActionBarItem>
+            </ActionBar>
             {table}
-        </div>
+        </Container>
     );
 };
 
