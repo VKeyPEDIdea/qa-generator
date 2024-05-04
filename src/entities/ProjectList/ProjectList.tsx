@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useStore } from 'features/store';
 import ButtonIcon from 'shared/ui/ButtonIcon';
 import classes from './ProjectList.module.css';
 
-const ProjectList = ({ projects }: { projects: string[]}) => {
+const ProjectList = () => {
+    const { projectList: { projectListKeys }} = useStore();
     return (
         <ul>
             {
-                projects.map(item => {
+                projectListKeys.map(item => {
                     return (
                         <li className={classes.item} key={item}>
                             <p className={classes.title}>

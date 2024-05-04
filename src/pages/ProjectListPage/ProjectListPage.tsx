@@ -1,21 +1,12 @@
+import { memo } from 'react';
+import { Link } from 'react-router-dom';
+import ProjectList from 'entities/ProjectList/ProjectList';
 import Button from 'shared/ui/Button';
 import classes from './ProjectListPage.module.css';
-import ProjectList from 'entities/ProjectList/ProjectList';
-import { Link } from 'react-router-dom';
-import { memo, useEffect } from 'react';
+import useGetProjectList from './hooks/useGetProjectList';
 
-interface IProjectListPage {
-    list: string[];
-    loadList: () => void;
-}
-
-const ProjectListPage = ({
-    list,
-    loadList,
-}: IProjectListPage) => {
-    useEffect(() => {
-        if (list.length === 0) loadList();
-    }, []);
+const ProjectListPage = () => {
+    useGetProjectList();
     
     return (
         <div className={classes.container}>
@@ -24,7 +15,7 @@ const ProjectListPage = ({
                     <Button title="Новый проект"/>
                 </Link>
             </div>
-            <ProjectList projects={list}/>
+            <ProjectList />
         </div>
     );
 };
