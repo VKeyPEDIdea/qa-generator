@@ -1,11 +1,17 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useStore } from 'features/store';
 
-const useQuestionList = (queryFn: (projectName: string) => void) => {
+const useQuestionList = () => {
 	const { projectName } = useParams();
+	const {
+		questions: {
+			getQuestionList
+		}
+	} = useStore();
     
 	useEffect(() => {
-		queryFn(projectName || '');
+		getQuestionList(projectName || '');
 	}, [projectName]);
 };
 

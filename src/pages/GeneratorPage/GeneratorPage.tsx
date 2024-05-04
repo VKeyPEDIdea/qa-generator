@@ -19,13 +19,12 @@ const GeneratorPage = () => {
             setQuestionTitleById,
             addQuestion,
             generateAnswersForTable,
-            getQuestionList,
             deleteAnswer,
             changeAnswerPercentage,
             deleteQuestion,
         },
     } = useStore();
-    useQuestionList(getQuestionList);
+    useQuestionList();
 
     const onAddQuestionHandler = () => {
         addQuestion();
