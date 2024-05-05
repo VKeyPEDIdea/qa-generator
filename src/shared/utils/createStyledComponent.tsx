@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface ComponentProps {
   children: React.ReactNode;
 }
@@ -7,7 +9,10 @@ interface ComponentFactoryProps {
 }
 
 const createStyledComponent = (baseClassName: string) => {
-  return ({ className, children }: ComponentProps & ComponentFactoryProps) => {
+  return function ({
+    className,
+    children,
+  }: ComponentProps & ComponentFactoryProps) {
     const combinedClassName = `${baseClassName} ${className}`;
     return <div className={combinedClassName}>{children}</div>;
   };

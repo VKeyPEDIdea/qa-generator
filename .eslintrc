@@ -3,6 +3,14 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  },
   "extends": [
     "airbnb",
     "airbnb-typescript",
@@ -37,7 +45,7 @@
     "no-tabs": "off",
     "arrow-parens": "off",
     "no-confusing-arrow": "off",
-    "indent": ["off"],
+    "indent": ["error", 2],
     "class-methods-use-this": "off",
     "no-restricted-globals": ["error", "event", "fdescribe"],
     "no-alert": "off",
@@ -47,6 +55,7 @@
     "one-var-declaration-per-line": "off",
     "no-underscore-dangle": "off",
     "no-continue": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
     "quotes": ["error", "single", { "avoidEscape": true }],
     "no-multi-spaces": "error",
     "import/no-unresolved": "error",

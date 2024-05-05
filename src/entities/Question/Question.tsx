@@ -1,103 +1,116 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Card from 'shared/ui/Card';
-import classes from './Question.module.css';
 import { Answer } from 'features/questionList/questionListStore';
 import Button from 'shared/ui/Button/Button';
 import AnswerListItem from 'entities/AnswerListItem';
+import classes from './Question.module.css';
 
 interface QuestionProps {
-    id: string;
-    title: string;
-    answerList: Answer[];
-    serialNumber: number;
-    onTitleChange: (id: string, title: string) => void;
-    onAnswerListChange: (id: number, answerList: Omit<Answer, 'id'>[]) => void;
-    onDeleteAnswer: (id: number) => void;
-    onPercentageChange: (id: string, answerText: string, percentage: number) => void;
-    onDeleteQuestion(id: string): void;
+  id: string;
+  title: string;
+  answerList: Answer[];
+  serialNumber: number;
+  onTitleChange: (id: string, title: string) => void;
+  onAnswerListChange: (id: number, answerList: Omit<Answer, 'id'>[]) => void;
+  onDeleteAnswer: (id: number) => void;
+  onPercentageChange: (
+    id: string,
+    answerText: string,
+    percentage: number,
+  ) => void;
+  onDeleteQuestion(id: string): void;
 }
 
 const Question = ({
-    id,
-    title,
-    answerList,
-    serialNumber,
-    onTitleChange,
-    onAnswerListChange,
-    onDeleteAnswer,
-    onPercentageChange,
-    onDeleteQuestion
+  id,
+  title,
+  answerList,
+  serialNumber,
+  onTitleChange,
+  onAnswerListChange,
+  onDeleteAnswer,
+  onPercentageChange,
+  onDeleteQuestion,
 }: QuestionProps) => {
-    const [answers, setAnswers] = useState<Omit<Answer, 'id'>[]>([])
-    const [height, setHeight] = useState('auto');
-    const forceUpdate = useState(false)[1];
-    const onQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onTitleChange(id, e.target.value);
-    };
+  const [answers, setAnswers] = useState<Omit<Answer, 'id'>[]>([]);
+  const [height, setHeight] = useState('auto');
+  const forceUpdate = useState(false)[1];
+  const onQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onTitleChange(id, e.target.value);
+  };
 
-    const onChangeAnswersVariant = (event: React.FormEvent<HTMLTextAreaElement>) => {
-        const targetText = event.currentTarget.value;
-        const arr = targetText.split('\n');
-        const answers: Omit<Answer, 'id'>[] = arr.map(res => ({
-            text: res,
-            amount: 0,
-            count: 0,
-            percentage: 100,
-            questionId: id,
-        }));
-        const newHeight = event.currentTarget.scrollHeight + 'px';
-        if (newHeight !== height) setHeight(newHeight);
+  const onChangeAnswersVariant = (
+    event: React.FormEvent<HTMLTextAreaElement>,
+  ) => {
+    const targetText = event.currentTarget.value;
+    const arr = targetText.split('\n');
+    const list: Omit<Answer, 'id'>[] = arr.map((res) => ({
+      text: res,
+      amount: 0,
+      count: 0,
+      percentage: 100,
+      questionId: id,
+    }));
+    const newHeight = `${event.currentTarget.scrollHeight}px`;
+    if (newHeight !== height) setHeight(newHeight);
 
-        setAnswers(answers);
-    };
-    
-    const onAddNewAnswers = () => {
-        onAnswerListChange(Number(id), answers);
-        setAnswers([]);
-        setHeight('auto');
-    };
+    setAnswers(list);
+  };
 
-    const onPercentageChangeHandler = (event: React.ChangeEvent<HTMLInputElement>, text: string) => {
-        const percentage = +event.target.value;
-        onPercentageChange(id, text, percentage);
-        forceUpdate(value => !value);
-    };
+  const onAddNewAnswers = () => {
+    onAnswerListChange(Number(id), answers);
+    setAnswers([]);
+    setHeight('auto');
+  };
 
-    return (
-        <div className={classes.question}>
-            <Card>
-                <p className={classes.label}>{serialNumber} Вопрос</p>
-                <div className={classes.input}>
-                    <input type='text'
-                        placeholder='Введите вопрос'
-                        className={classes.field}
-                        value={title}
-                        onChange={onQuestionChange}
-                    />
-                </div>
-                <p className={classes.label}>Варианты ответов</p>
-                <div className={classes.area}>
-                    <textarea
-                        style={ { height } }
-                        onChange={onChangeAnswersVariant}
-                        className={classes.field}
-                        value={answers.map(({ text }) => text).join('\n')}
-                        placeholder='Ваши ответы' />
-                </div>
-                <div className={classes['action-bar']}>
-                    <Button title='Добавить ответы' onClick={onAddNewAnswers}/>
-                    <Button title='Удалить вопрос' onClick={() => onDeleteQuestion(id)} />
-                </div>
-                {answerList.map(({ text, percentage, id }, index) => (
-                    <AnswerListItem key={index + text}
-                        content={text}
-                        onDelete={() => onDeleteAnswer(id)}
-                        percentage={percentage}
-                        onPercentageChange={(e) => onPercentageChangeHandler(e, text)}/>
-                ))}
-            </Card>
+  const onPercentageChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    text: string,
+  ) => {
+    const percentage = +event.target.value;
+    onPercentageChange(id, text, percentage);
+    forceUpdate((value) => !value);
+  };
+
+  return (
+    <div className={classes.question}>
+      <Card>
+        <p className={classes.label}>{serialNumber} Вопрос</p>
+        <div className={classes.input}>
+          <input
+            type="text"
+            placeholder="Введите вопрос"
+            className={classes.field}
+            value={title}
+            onChange={onQuestionChange}
+          />
         </div>
-    );
+        <p className={classes.label}>Варианты ответов</p>
+        <div className={classes.area}>
+          <textarea
+            style={{ height }}
+            onChange={onChangeAnswersVariant}
+            className={classes.field}
+            value={answers.map(({ text }) => text).join('\n')}
+            placeholder="Ваши ответы"
+          />
+        </div>
+        <div className={classes['action-bar']}>
+          <Button title="Добавить ответы" onClick={onAddNewAnswers} />
+          <Button title="Удалить вопрос" onClick={() => onDeleteQuestion(id)} />
+        </div>
+        {answerList.map(({ text, percentage, id: answerId }) => (
+          <AnswerListItem
+            key={text}
+            content={text}
+            onDelete={() => onDeleteAnswer(answerId)}
+            percentage={percentage}
+            onPercentageChange={(e) => onPercentageChangeHandler(e, text)}
+          />
+        ))}
+      </Card>
+    </div>
+  );
 };
 
 export default Question;

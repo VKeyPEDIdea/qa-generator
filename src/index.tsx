@@ -6,16 +6,15 @@ import store, { StoreContext } from 'features/store';
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
+  document.getElementById('root') as HTMLElement,
 );
 
 root.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <StoreContext.Provider value={store}>
-                <App projectList={store.projectList} questions={store.questions}/>
-            </StoreContext.Provider>
-        </BrowserRouter>
-    </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <StoreContext.Provider value={store}>
+        <App />
+      </StoreContext.Provider>
+    </BrowserRouter>
+  </React.StrictMode>,
 );
-
