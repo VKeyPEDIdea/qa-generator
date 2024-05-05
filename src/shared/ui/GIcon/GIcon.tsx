@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable max-len, indent */
 import React from 'react';
 import { GIconProps } from './GIconProps.model';
 
